@@ -1,6 +1,8 @@
 package com.cjdfintech.merchantlauncher
 
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,10 @@ class AppAdapter(val items: ArrayList<AppInfo>, val context: Context) : Recycler
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.appTitleTv?.text = items.get(position).label
         holder.appIcon.setImageDrawable(items.get(position).icon)
+        holder.appLayout.setOnClickListener {
+            val intent = context.packageManager.getLaunchIntentForPackage(items.get(position).packageName.toString())
+            context.startActivity(intent)
+        }
     }
 
     override fun onCreateViewHolder(viewgroup: ViewGroup, viewType: Int): ViewHolder {
@@ -25,5 +31,6 @@ class AppAdapter(val items: ArrayList<AppInfo>, val context: Context) : Recycler
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val appTitleTv = itemView.appNameTv
         val appIcon = itemView.iconView
+        val appLayout = itemView.appLayout
     }
 }

@@ -16,7 +16,6 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
 
     lateinit var pm: PackageManager
-    lateinit var apps: List<ApplicationInfo>
     lateinit var installedApp: ArrayList<AppInfo>
     lateinit var allApp: List<ResolveInfo>
 
@@ -28,13 +27,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         pm = applicationContext.packageManager
-        apps = pm.getInstalledApplications(PackageManager.GET_META_DATA)
         installedApp = ArrayList()
 
         addArrayList()
 
         appList.layoutManager = GridLayoutManager(this, 3)
         appList.adapter = AppAdapter(installedApp, this)
+
+        allAppButton.setOnClickListener {
+            val intent = Intent(this, AppDrawerActivity::class.java)
+            startActivity(intent)
+        }
 
         val timer= Timer()
         timer?.scheduleAtFixedRate(object : TimerTask(){
@@ -50,11 +53,14 @@ class MainActivity : AppCompatActivity() {
 
         allApp = pm.queryIntentActivities(i, 0)
         for (ri: ResolveInfo in allApp){
-            val app = AppInfo()
-            app.label = ri.loadLabel(pm)
-            app.packageName = ri.activityInfo.packageName
-            app.icon = ri.activityInfo.loadIcon(pm)
-            installedApp.add(app)
+            if(ri.activityInfo.packageName.startsWith("com.cjdfintech.merchantapp") || ri.activityInfo.packageName.equals("com.android.settings")){
+                val app = AppInfo()
+                app.label = ri.loadLabel(pm)
+                app.packageName = ri.activityInfo.packageName
+                app.icon = ri.activityInfo.loadIcon(pm)
+                installedApp.add(app)
+            }
+
         }
     }
 
