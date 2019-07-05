@@ -15,7 +15,7 @@
             android:minHeight="?attr/actionBarSize" android:id="@+id/toolbar"
             app:title="AllApps"
             app:titleTextColor="@android:color/white"
-            app:navigationIcon="@drawable/baseline_arrow_back_white_18dp"
+            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
     />
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

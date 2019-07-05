@@ -1,13 +1,12 @@
 package com.cjdfintech.merchantlauncher
 
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
+import com.cjdfintech.merchantlauncher.Information.InformationAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,6 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var resultDateTime :String
     private val formatTime = SimpleDateFormat("HH:mm")
+    private val formatDay = SimpleDateFormat("EEEE")
+    private val formatDate = SimpleDateFormat("d MMMM YYYY")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         installedApp = ArrayList()
 
         addArrayList()
+        intializePager()
 
         appList.layoutManager = GridLayoutManager(this, 3)
         appList.adapter = AppAdapter(installedApp, this)
@@ -63,6 +65,12 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+    private fun intializePager(){
+        val informationPager = viewPager
+        informationPager.adapter = InformationAdapter(supportFragmentManager)
+        val tabDotPager = tabDot
+        tabDotPager.setupWithViewPager(informationPager, true)
+    }
 
     private fun updateTimer(){
 
@@ -70,6 +78,8 @@ class MainActivity : AppCompatActivity() {
             val date = Date()
             resultDateTime = formatTime.format(date)
             clockTv.setText(resultDateTime)
+            dayTextView.setText(formatDay.format(date))
+            dateTextView.setText(formatDate.format(date))
         }
 
     }
