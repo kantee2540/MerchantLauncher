@@ -6,6 +6,10 @@ import android.content.pm.ResolveInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
+import android.view.KeyEvent
 import com.cjdfintech.merchantlauncher.Information.InformationAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -21,14 +25,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var resultDateTime :String
     private val formatTime = SimpleDateFormat("HH:mm")
     private val formatDay = SimpleDateFormat("EEEE")
-    private val formatDate = SimpleDateFormat("d MMMM YYYY")
+    private val formatDate = SimpleDateFormat("d MMMM y")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        pm = applicationContext.packageManager
-        installedApp = ArrayList()
 
         addArrayList()
         intializePager()
@@ -39,17 +40,34 @@ class MainActivity : AppCompatActivity() {
         allAppButton.setOnClickListener {
             val intent = Intent(this, AppDrawerActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.push_animation_enter, R.anim.push_animation_exit)
+        }
+        searchButton.setOnClickListener {
+
         }
 
         val timer= Timer()
         timer?.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
+
                 updateTimer()
             }
         }, 0, 1000)
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("==>", "Resume")
+        viewPager.setCurrentItem(0)
+        addArrayList()
+    }
+
     fun addArrayList(){
+
+        pm = applicationContext.packageManager
+        installedApp = ArrayList()
+
         val i = Intent(Intent.ACTION_MAIN, null)
         i.addCategory(Intent.CATEGORY_LAUNCHER)
 

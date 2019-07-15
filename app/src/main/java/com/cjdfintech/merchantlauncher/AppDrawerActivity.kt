@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_app_drawer.*
 class AppDrawerActivity : AppCompatActivity() {
 
     lateinit var pm: PackageManager
-    lateinit var apps: List<ApplicationInfo>
     lateinit var installedApp: ArrayList<AppInfo>
     lateinit var allApp: List<ResolveInfo>
 
@@ -28,8 +27,12 @@ class AppDrawerActivity : AppCompatActivity() {
 
         appDrawer.layoutManager = GridLayoutManager(this, 4)
         appDrawer.adapter = AppAdapter(installedApp, this)
-        toolbar.setNavigationOnClickListener { finish() }
+        toolbar.setNavigationOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.pop_animation_enter, R.anim.pop_animation_exit)
+        }
     }
+
 
     fun addArrayList(){
         val i = Intent(Intent.ACTION_MAIN, null)
