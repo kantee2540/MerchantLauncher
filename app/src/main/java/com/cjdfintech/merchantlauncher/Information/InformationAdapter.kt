@@ -3,11 +3,18 @@ package com.cjdfintech.merchantlauncher.Information
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
+import android.view.ViewGroup
 
 class InformationAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getCount(): Int {
-        return 3
+        return 2
+    }
+
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        super.destroyItem(container, position, `object`)
+
     }
 
     override fun getItem(position: Int): Fragment {

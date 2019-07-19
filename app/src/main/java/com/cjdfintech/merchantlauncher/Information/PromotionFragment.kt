@@ -16,7 +16,7 @@ class PromotionFragment : Fragment() {
         val webView = rootView.webView
         val webSettings = webView.settings
         webSettings.javaScriptEnabled = true
-        webView.loadUrl("https://www.yahoo.com")
+        webView.loadUrl("https://dolfinthailand.com/discover/")
 
         return rootView
 

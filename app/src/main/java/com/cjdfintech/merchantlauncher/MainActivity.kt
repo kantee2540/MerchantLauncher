@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         intializePager()
 
         appList.layoutManager = GridLayoutManager(this, 3)
-        appList.adapter = AppAdapter(installedApp, this)
+        appList.adapter = AppHomeAdapter(installedApp, this)
 
         allAppButton.setOnClickListener {
             val intent = Intent(this, AppDrawerActivity::class.java)
@@ -49,12 +49,11 @@ class MainActivity : AppCompatActivity() {
         val timer= Timer()
         timer?.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
-
                 updateTimer()
             }
         }, 0, 1000)
-    }
 
+    }
 
     override fun onResume() {
         super.onResume()
@@ -62,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.setCurrentItem(0)
         addArrayList()
     }
+
 
     fun addArrayList(){
 
@@ -73,7 +73,9 @@ class MainActivity : AppCompatActivity() {
 
         allApp = pm.queryIntentActivities(i, 0)
         for (ri: ResolveInfo in allApp){
-            if(ri.activityInfo.packageName.startsWith("com.cjdfintech.merchantapp") || ri.activityInfo.packageName.equals("com.android.settings")){
+            if(ri.activityInfo.packageName.startsWith("com.cjdfintech.merchantapp")
+                || ri.activityInfo.packageName.equals("com.android.settings")
+                || ri.activityInfo.packageName.equals("com.jr.jd.th.ekyc")){
                 val app = AppInfo()
                 app.label = ri.loadLabel(pm)
                 app.packageName = ri.activityInfo.packageName

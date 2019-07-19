@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.app_item.view.*
-import java.util.*
 import kotlin.collections.ArrayList
 
-class AppAdapter(val items: ArrayList<AppInfo>, val context: Context) : RecyclerView.Adapter<AppAdapter.ViewHolder>() {
+class AppHomeAdapter(val items: ArrayList<AppInfo>, val context: Context) : RecyclerView.Adapter<AppHomeAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
@@ -18,6 +17,7 @@ class AppAdapter(val items: ArrayList<AppInfo>, val context: Context) : Recycler
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.appTitleTv?.text = items[position].label
         holder.appIcon.setImageDrawable(items[position].icon)
+
         holder.appLayout.setOnClickListener {
             val intent = context.packageManager.getLaunchIntentForPackage(items.get(position).packageName.toString())
             context.startActivity(intent)
@@ -26,8 +26,9 @@ class AppAdapter(val items: ArrayList<AppInfo>, val context: Context) : Recycler
     }
 
     override fun onCreateViewHolder(viewgroup: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.app_item, viewgroup, false))
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.app_home_item, viewgroup, false))
     }
+
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val appTitleTv = itemView.appNameTv
