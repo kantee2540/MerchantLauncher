@@ -15,6 +15,7 @@ class AppDrawerActivity : AppCompatActivity() {
     lateinit var installedApp: ArrayList<AppInfo>
     lateinit var allApp: List<ResolveInfo>
 
+    var pauseApp :Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,19 @@ class AppDrawerActivity : AppCompatActivity() {
             finish()
             overridePendingTransition(R.anim.pop_animation_enter, R.anim.pop_animation_exit)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (pauseApp){
+            finish()
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pauseApp = true
     }
 
 

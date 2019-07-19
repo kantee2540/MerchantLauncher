@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         addArrayList()
         intializePager()
 
-        appList.layoutManager = GridLayoutManager(this, 3)
+        appList.layoutManager = GridLayoutManager(this@MainActivity, 3)
         appList.adapter = AppHomeAdapter(installedApp, this)
 
         allAppButton.setOnClickListener {
