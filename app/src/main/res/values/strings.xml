@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MerchantLauncher</string>
+    <string name="call_dolfin">ติดต่อศูนย์บริการร้านค้า Dolfin</string>
+    <string name="call_dolfin_tel">02&#8211;255&#8211;9222</string>
+    <string name="call_dolfin_date">สามารถติดต่อได้ทุกวัน\nเวลา 10:00 &#8211; 22:00</string>
 </resources>

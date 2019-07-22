@@ -6,10 +6,7 @@ import android.content.pm.ResolveInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
-import android.view.KeyEvent
 import com.cjdfintech.merchantlauncher.Information.InformationAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
