@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">MerchantLauncher</string>
+    <string name="all_apps">All Apps</string>
+
     <string name="call_dolfin">ติดต่อศูนย์บริการร้านค้า Dolfin</string>
     <string name="call_dolfin_tel">02&#8211;255&#8211;9222</string>
     <string name="call_dolfin_date">สามารถติดต่อได้ทุกวัน\nเวลา 10:00 &#8211; 22:00</string>
+
+    <string name="update_p1">อัพเดท</string>
+    <string name="update_schedule">อัพเดทรอบถัดไป</string>
+    <string name="no_update_schedule">ไม่มีอัพเดท</string>
+    <string name="update_lastest">Finpoint ในเครื่องเป็นเวอร์ชั่นล่าสุดแล้ว</string>
+    <string name="version">เวอร์ชั่น :</string>
+    <string name="not_installed">คุณยังไม่ได้ติดตั้งFinpoint</string>
 </resources>

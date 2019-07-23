@@ -85,9 +85,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        Log.e("count apps", installedApp.size.toString())
 
-        //update applist
         if(firstOpen){
             allAppCount = installedApp.size
             firstOpen = false
