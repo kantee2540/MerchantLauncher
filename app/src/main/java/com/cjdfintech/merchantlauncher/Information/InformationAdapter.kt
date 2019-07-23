@@ -4,31 +4,23 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.view.View
 import android.view.ViewGroup
 
 class InformationAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-    override fun getCount(): Int {
-        return 2
+    var mFragment: ArrayList<Fragment> = ArrayList()
+
+    fun addFragment(fragment: Fragment) {
+        mFragment.add(fragment)
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        super.destroyItem(container, position, `object`)
-
+    override fun getCount(): Int {
+        return mFragment.size
     }
 
     override fun getItem(position: Int): Fragment {
-        if(position == 0){
-            return PromotionFragment()
-        }
-        else if(position == 1){
-            return DeviceInfomationFragment()
-        }
-        else if(position == 2){
-            return OtherFragment()
-        }
-        else{
-            return PromotionFragment()
-        }
+        return mFragment[position]
     }
+
 }

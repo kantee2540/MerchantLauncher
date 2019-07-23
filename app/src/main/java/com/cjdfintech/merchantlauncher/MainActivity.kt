@@ -6,8 +6,9 @@ import android.content.pm.ResolveInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
-import com.cjdfintech.merchantlauncher.Information.InformationAdapter
+import com.cjdfintech.merchantlauncher.Information.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,7 +20,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var installedApp: ArrayList<AppInfo>
     lateinit var allApp: List<ResolveInfo>
 
+    lateinit var appRecyclerView: RecyclerView
+
     private lateinit var resultDateTime :String
+    private var firstOpen = true
+    private var allAppCount = 0
     private val formatTime = SimpleDateFormat("HH:mm")
     private val formatDay = SimpleDateFormat("EEEE")
     private val formatDate = SimpleDateFormat("d MMMM y")
@@ -30,9 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         addArrayList()
         intializePager()
-
-        appList.layoutManager = GridLayoutManager(this@MainActivity, 3)
-        appList.adapter = AppHomeAdapter(installedApp, this)
+        setupRecyclerView()
 
         allAppButton.setOnClickListener {
             val intent = Intent(this, AppDrawerActivity::class.java)
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         val timer= Timer()
         timer?.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
+                addArrayList()
                 updateTimer()
             }
         }, 0, 1000)
@@ -55,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.e("==>", "Resume")
-        viewPager.setCurrentItem(0)
+        viewPager.currentItem = 0
         addArrayList()
     }
 
@@ -81,12 +85,39 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+        Log.e("count apps", installedApp.size.toString())
+
+        //update applist
+        if(firstOpen){
+            allAppCount = installedApp.size
+            firstOpen = false
+        }
+
+        if((installedApp.size > allAppCount) || (installedApp.size < allAppCount) && !firstOpen){
+            runOnUiThread {
+                appRecyclerView.adapter = AppHomeAdapter(installedApp, this)
+                allAppCount = installedApp.size
+                Log.e("App", "Apps list is changed")
+            }
+        }
     }
     private fun intializePager(){
+        val informationAdapter = InformationAdapter(supportFragmentManager)
+        informationAdapter.addFragment(PromotionFragment())
+        informationAdapter.addFragment(CallCenterFragment())
+        informationAdapter.addFragment(OtherFragment())
+
         val informationPager = viewPager
-        informationPager.adapter = InformationAdapter(supportFragmentManager)
+        informationPager.adapter = informationAdapter
+        informationPager.offscreenPageLimit = 3
         val tabDotPager = tabDot
         tabDotPager.setupWithViewPager(informationPager, true)
+
+    }
+    private fun setupRecyclerView(){
+        appRecyclerView = appList
+        appRecyclerView.layoutManager = GridLayoutManager(this@MainActivity, 3)
+        appRecyclerView.adapter = AppHomeAdapter(installedApp, this)
     }
 
     private fun updateTimer(){
