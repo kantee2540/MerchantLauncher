@@ -60,7 +60,8 @@ class AppDrawerActivity : AppCompatActivity() {
             app.icon = ri.activityInfo.loadIcon(pm)
             installedApp.add(app)
 
-
         }
+
+        installedApp.sortBy { it.label.toString() }
     }
 }
