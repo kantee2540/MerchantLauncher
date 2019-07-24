@@ -42,9 +42,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.push_animation_enter, R.anim.push_animation_exit)
         }
-        searchButton.setOnClickListener {
-
-        }
 
         val timer= Timer()
         timer?.scheduleAtFixedRate(object : TimerTask(){
