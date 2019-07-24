@@ -43,9 +43,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.push_animation_enter, R.anim.push_animation_exit)
         }
-        searchButton.setOnClickListener {
-
-        }
 
 
 
@@ -80,9 +77,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        Log.e("count apps", installedApp.size.toString())
 
-        //update applist
         if(firstOpen){
             allAppCount = installedApp.size
             firstOpen = false

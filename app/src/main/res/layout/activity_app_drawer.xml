@@ -13,7 +13,7 @@
             android:background="@android:color/transparent"
             android:theme="?attr/actionBarTheme"
             android:minHeight="?attr/actionBarSize" android:id="@+id/toolbar"
-            app:title="AllApps"
+            app:title="@string/all_apps"
             app:titleTextColor="@android:color/white"
             app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
     />
