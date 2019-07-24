@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        updateTimer()
         addArrayList()
         intializePager()
         setupRecyclerView()
@@ -46,13 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        val timer= Timer()
-        timer?.scheduleAtFixedRate(object : TimerTask(){
-            override fun run() {
-                addArrayList()
-                updateTimer()
-            }
-        }, 0, 1000)
+
 
     }
 
@@ -121,14 +116,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateTimer(){
-
-        runOnUiThread {
-            val date = Date()
-            resultDateTime = formatTime.format(date)
-            clockTv.setText(resultDateTime)
-            dayTextView.setText(formatDay.format(date))
-            dateTextView.setText(formatDate.format(date))
-        }
+        val timer= Timer()
+        timer?.scheduleAtFixedRate(object : TimerTask(){
+            override fun run() {
+                addArrayList()
+                runOnUiThread {
+                    val date = Date()
+                    resultDateTime = formatTime.format(date)
+                    clockTv.setText(resultDateTime)
+                    dayTextView.setText(formatDay.format(date))
+                    dateTextView.setText(formatDate.format(date))
+                }
+            }
+        }, 0, 1000)
 
     }
 }
