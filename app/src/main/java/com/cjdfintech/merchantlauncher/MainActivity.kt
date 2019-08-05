@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.cjdfintech.merchantlauncher.Information.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -33,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        updateTimer()
         addArrayList()
+        updateTimer()
         intializePager()
         setupRecyclerView()
 
