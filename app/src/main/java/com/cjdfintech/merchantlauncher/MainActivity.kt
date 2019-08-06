@@ -69,15 +69,34 @@ class MainActivity : AppCompatActivity() {
             if(ri.activityInfo.packageName.startsWith("com.cjdfintech.merchantapp")
                 || ri.activityInfo.packageName == "com.android.settings"
                 || ri.activityInfo.packageName == "com.jr.jd.th.ekyc"
-                || ri.activityInfo.packageName == "woyou.market"){
+                || ri.activityInfo.packageName == "woyou.market") {
                 val app = AppInfo()
-                app.label = ri.loadLabel(pm)
+                if (ri.activityInfo.packageName == "com.jr.jd.th.ekyc"){
+                    app.label = "Dip Chip"
+                    app.listNumber = 1
+                }
+                else if(ri.activityInfo.packageName.startsWith("com.cjdfintech.merchantapp")){
+                    app.label = ri.loadLabel(pm)
+                    app.listNumber = 0
+                }
+                else if(ri.activityInfo.packageName == "com.android.settings"){
+                    app.label = ri.loadLabel(pm)
+                    app.listNumber = 2
+                }
+                else if(ri.activityInfo.packageName == "woyou.market"){
+                    app.label = ri.loadLabel(pm)
+                    app.listNumber = 3
+                }
                 app.packageName = ri.activityInfo.packageName
                 app.icon = ri.activityInfo.loadIcon(pm)
+
+
                 installedApp.add(app)
             }
 
         }
+
+        installedApp.sortBy { it.listNumber }
 
         if(firstOpen){
             allAppCount = installedApp.size
