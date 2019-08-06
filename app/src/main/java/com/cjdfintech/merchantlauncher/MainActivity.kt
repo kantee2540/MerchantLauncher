@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         addArrayList()
         updateTimer()
-        intializePager()
+        //intializePager()
         setupRecyclerView()
 
         allAppButton.setOnClickListener {
@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.e("==>", "Resume")
         viewPager.currentItem = 0
         addArrayList()
     }
@@ -68,8 +67,9 @@ class MainActivity : AppCompatActivity() {
         allApp = pm.queryIntentActivities(i, 0)
         for (ri: ResolveInfo in allApp){
             if(ri.activityInfo.packageName.startsWith("com.cjdfintech.merchantapp")
-                || ri.activityInfo.packageName.equals("com.android.settings")
-                || ri.activityInfo.packageName.equals("com.jr.jd.th.ekyc")){
+                || ri.activityInfo.packageName == "com.android.settings"
+                || ri.activityInfo.packageName == "com.jr.jd.th.ekyc"
+                || ri.activityInfo.packageName == "woyou.market"){
                 val app = AppInfo()
                 app.label = ri.loadLabel(pm)
                 app.packageName = ri.activityInfo.packageName

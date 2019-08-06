@@ -7,6 +7,7 @@ import android.content.pm.ResolveInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_app_drawer.*
 
 class AppDrawerActivity : AppCompatActivity() {
@@ -58,6 +59,7 @@ class AppDrawerActivity : AppCompatActivity() {
             app.label = ri.loadLabel(pm)
             app.packageName = ri.activityInfo.packageName
             app.icon = ri.activityInfo.loadIcon(pm)
+            Log.e("LABEL", ri.activityInfo.packageName.toString())
             installedApp.add(app)
 
         }
