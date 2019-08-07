@@ -1,6 +1,8 @@
 package com.cjdfintech.merchantlauncher
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.support.v7.app.AppCompatActivity
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var allApp: List<ResolveInfo>
 
     lateinit var appRecyclerView: RecyclerView
+    lateinit var saveInstalledApp: SharedPreferences
 
     private lateinit var resultDateTime :String
     private var firstOpen = true
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        saveInstalledApp = getSharedPreferences("saveArrayList", MODE_PRIVATE)
 
         addArrayList()
         updateTimer()
@@ -98,6 +103,7 @@ class MainActivity : AppCompatActivity() {
 
         installedApp.sortBy { it.listNumber }
 
+
         if(firstOpen){
             allAppCount = installedApp.size
             firstOpen = false
@@ -111,6 +117,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun checkAppListIsChanged(){
+
+    }
+
     private fun intializePager(){
         val informationAdapter = InformationAdapter(supportFragmentManager)
         informationAdapter.addFragment(PromotionFragment())
@@ -134,7 +145,7 @@ class MainActivity : AppCompatActivity() {
         val timer= Timer()
         timer?.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
-                addArrayList()
+                //addArrayList()
                 runOnUiThread {
                     val date = Date()
                     resultDateTime = formatTime.format(date)
