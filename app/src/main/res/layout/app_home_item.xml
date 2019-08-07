@@ -4,10 +4,8 @@
               android:background="@drawable/app_item_background"
               android:layout_width="120dp"
               android:layout_height="wrap_content"
-              android:paddingTop="15dp"
-              android:paddingBottom="15dp"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp"
+              android:paddingTop="23dp"
+              android:paddingBottom="23dp"
               android:orientation="vertical" android:id="@+id/appLayout"
               android:focusable="true"
               android:clickable="true">
