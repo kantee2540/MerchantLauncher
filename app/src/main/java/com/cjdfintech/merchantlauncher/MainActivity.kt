@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         addArrayList()
         updateTimer()
         //intializePager()
-        setupRecyclerView()
 
         allAppButton.setOnClickListener {
             val intent = Intent(this, AppDrawerActivity::class.java)
@@ -116,6 +115,8 @@ class MainActivity : AppCompatActivity() {
                 Log.e("App", "Apps list is changed")
             }
         }
+
+        setupRecyclerView()
     }
 
     private fun checkAppListIsChanged(){
