@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         addArrayList()
         updateTimer()
-        //intializePager()
+        intializePager()
 
         allAppButton.setOnClickListener {
             val intent = Intent(this, AppDrawerActivity::class.java)
