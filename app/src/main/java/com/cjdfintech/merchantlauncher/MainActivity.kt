@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         private const val FINPOINT_PACKAGE = "com.cjdfintech.merchantapp"
         private const val SETTINGS_PACKAGE = "com.android.settings"
         private const val DIPCHIP_PACKAGE = "com.jr.jd.th.ekyc"
+        private const val DIPCHIP_NAME = "Dip Chip"
         private const val APPSTORE_PACKAGE = "woyou.market"
     }
 
@@ -77,19 +78,19 @@ class MainActivity : AppCompatActivity() {
                 || ri.activityInfo.packageName == DIPCHIP_PACKAGE
                 || ri.activityInfo.packageName == APPSTORE_PACKAGE) {
                 val app = AppInfo()
-                if (ri.activityInfo.packageName == "com.jr.jd.th.ekyc"){
-                    app.label = "Dip Chip"
+                if (ri.activityInfo.packageName == DIPCHIP_PACKAGE){
+                    app.label = DIPCHIP_NAME
                     app.listNumber = 1
                 }
-                else if(ri.activityInfo.packageName.startsWith("com.cjdfintech.merchantapp")){
+                else if(ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE)){
                     app.label = ri.loadLabel(pm)
                     app.listNumber = 0
                 }
-                else if(ri.activityInfo.packageName == "com.android.settings"){
+                else if(ri.activityInfo.packageName == SETTINGS_PACKAGE){
                     app.label = ri.loadLabel(pm)
                     app.listNumber = 2
                 }
-                else if(ri.activityInfo.packageName == "woyou.market"){
+                else if(ri.activityInfo.packageName == APPSTORE_PACKAGE){
                     app.label = ri.loadLabel(pm)
                     app.listNumber = 3
                 }
