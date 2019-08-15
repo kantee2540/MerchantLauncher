@@ -1,18 +1,15 @@
 package com.cjdfintech.merchantlauncher
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 import com.cjdfintech.merchantlauncher.Information.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -138,7 +135,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun setupRecyclerView(){
         appRecyclerView = appList
-        appRecyclerView.layoutManager = GridLayoutManager(this@MainActivity, 3)
+        appRecyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(this@MainActivity, 3)
         appRecyclerView.adapter = AppHomeAdapter(installedApp, this)
     }
 

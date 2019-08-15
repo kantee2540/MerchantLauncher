@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "790282865506",
+    "firebase_url": "https://merchant-launcher.firebaseio.com",
+    "project_id": "merchant-launcher",
+    "storage_bucket": "merchant-launcher.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790282865506:android:2b195414470346d5",
+        "android_client_info": {
+          "package_name": "com.cjdfintech.merchantlauncher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790282865506-c0aeu0o64s71k2c34bfterc48jb211ab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQMFrn60OeWHIiiYMqsCpKKXp2LtNa1QU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790282865506-c0aeu0o64s71k2c34bfterc48jb211ab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
