@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "790282865506-qglv0hm027k8an6mcuh52dul6o13vlvj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cjdfintech.merchantlauncher",
+            "certificate_hash": "22527be663677f5e32b43ef45128da290cc8f5e4"
+          }
+        },
+        {
           "client_id": "790282865506-c0aeu0o64s71k2c34bfterc48jb211ab.apps.googleusercontent.com",
           "client_type": 3
         }

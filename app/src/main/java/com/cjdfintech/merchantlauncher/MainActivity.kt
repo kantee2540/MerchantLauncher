@@ -30,6 +30,13 @@ class MainActivity : AppCompatActivity() {
     private val formatDay = SimpleDateFormat("EEEE")
     private val formatDate = SimpleDateFormat("d MMMM y")
 
+    companion object{
+        private const val FINPOINT_PACKAGE = "com.cjdfintech.merchantapp"
+        private const val SETTINGS_PACKAGE = "com.android.settings"
+        private const val DIPCHIP_PACKAGE = "com.jr.jd.th.ekyc"
+        private const val APPSTORE_PACKAGE = "woyou.market"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,8 +52,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.push_animation_enter, R.anim.push_animation_exit)
         }
-
-
 
     }
 
@@ -67,10 +72,10 @@ class MainActivity : AppCompatActivity() {
 
         allApp = pm.queryIntentActivities(i, 0)
         for (ri: ResolveInfo in allApp){
-            if(ri.activityInfo.packageName.startsWith("com.cjdfintech.merchantapp")
-                || ri.activityInfo.packageName == "com.android.settings"
-                || ri.activityInfo.packageName == "com.jr.jd.th.ekyc"
-                || ri.activityInfo.packageName == "woyou.market") {
+            if(ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE)
+                || ri.activityInfo.packageName == SETTINGS_PACKAGE
+                || ri.activityInfo.packageName == DIPCHIP_PACKAGE
+                || ri.activityInfo.packageName == APPSTORE_PACKAGE) {
                 val app = AppInfo()
                 if (ri.activityInfo.packageName == "com.jr.jd.th.ekyc"){
                     app.label = "Dip Chip"
