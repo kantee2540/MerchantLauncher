@@ -131,6 +131,7 @@ class MainActivity : AppCompatActivity() {
         informationAdapter.addFragment(PromotionFragment())
         informationAdapter.addFragment(CallCenterFragment())
         informationAdapter.addFragment(OtherFragment())
+        informationAdapter.addFragment(NewsFragment())
 
         val informationPager = viewPager
         informationPager.adapter = informationAdapter
