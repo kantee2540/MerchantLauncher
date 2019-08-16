@@ -12,4 +12,6 @@
     <string name="update_lastest">Finpoint ในเครื่องเป็นเวอร์ชั่นล่าสุดแล้ว</string>
     <string name="version">เวอร์ชั่น :</string>
     <string name="not_installed">คุณยังไม่ได้ติดตั้งFinpoint</string>
+    <string name="keep_turnon">โปรดเปิดเครื่องไว้ตลอดการอัพเดท</string>
+    <string name="check_for_update"><u>ตรวจสอบอัพเดท</u></string>
 </resources>
