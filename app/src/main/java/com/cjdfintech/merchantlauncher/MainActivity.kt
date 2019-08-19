@@ -12,8 +12,6 @@ import com.cjdfintech.merchantlauncher.Information.*
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -30,9 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var resultDateTime :String
     private var firstOpen = true
     private var allAppCount = 0
-    private val formatTime = SimpleDateFormat("HH:mm")
-    private val formatDay = SimpleDateFormat("EEEE")
-    private val formatDate = SimpleDateFormat("d MMMM y")
 
     companion object{
         private const val FINPOINT_PACKAGE = "com.cjdfintech.merchantapp"
@@ -55,14 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         getShowIconProperties()
         addArrayList()
-        updateTimer()
         intializePager()
-
-        allAppButton.setOnClickListener {
-            val intent = Intent(this, AppDrawerActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.push_animation_enter, R.anim.push_animation_exit)
-        }
 
     }
 
@@ -89,21 +77,23 @@ class MainActivity : AppCompatActivity() {
                 || (ri.activityInfo.packageName == DIPCHIP_PACKAGE && remoteConfig.getBoolean(SHOW_DIPCHIP))
                 || ri.activityInfo.packageName == APPSTORE_PACKAGE && remoteConfig.getBoolean(SHOW_APPSTORE)) {
                 val app = AppInfo()
-                if (ri.activityInfo.packageName == DIPCHIP_PACKAGE){
-                    app.label = DIPCHIP_NAME
-                    app.listNumber = 1
-                }
-                else if(ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE)){
-                    app.label = ri.loadLabel(pm)
-                    app.listNumber = 0
-                }
-                else if(ri.activityInfo.packageName == SETTINGS_PACKAGE){
-                    app.label = ri.loadLabel(pm)
-                    app.listNumber = 2
-                }
-                else if(ri.activityInfo.packageName == APPSTORE_PACKAGE){
-                    app.label = ri.loadLabel(pm)
-                    app.listNumber = 3
+                when {
+                    ri.activityInfo.packageName == DIPCHIP_PACKAGE -> {
+                        app.label = DIPCHIP_NAME
+                        app.listNumber = 1
+                    }
+                    ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE) -> {
+                        app.label = ri.loadLabel(pm)
+                        app.listNumber = 0
+                    }
+                    ri.activityInfo.packageName == SETTINGS_PACKAGE -> {
+                        app.label = ri.loadLabel(pm)
+                        app.listNumber = 2
+                    }
+                    ri.activityInfo.packageName == APPSTORE_PACKAGE -> {
+                        app.label = ri.loadLabel(pm)
+                        app.listNumber = 3
+                    }
                 }
                 app.packageName = ri.activityInfo.packageName
                 app.icon = ri.activityInfo.loadIcon(pm)
@@ -169,21 +159,5 @@ class MainActivity : AppCompatActivity() {
         appRecyclerView = appList
         appRecyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(this@MainActivity, 3)
         appRecyclerView.adapter = AppHomeAdapter(installedApp, this)
-    }
-
-    private fun updateTimer(){
-        val timer= Timer()
-        timer?.scheduleAtFixedRate(object : TimerTask(){
-            override fun run() {
-                runOnUiThread {
-                    val date = Date()
-                    resultDateTime = formatTime.format(date)
-                    clockTv.setText(resultDateTime)
-                    dayTextView.setText(formatDay.format(date))
-                    dateTextView.setText(formatDate.format(date))
-                }
-            }
-        }, 0, 1000)
-
     }
 }
