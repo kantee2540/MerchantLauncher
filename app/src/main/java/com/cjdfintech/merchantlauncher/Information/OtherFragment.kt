@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cjdfintech.merchantlauncher.BuildConfig
 import com.cjdfintech.merchantlauncher.R
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -19,31 +20,28 @@ class OtherFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_other, container, false)
+        getMessage()
+        return rootView
+    }
 
+    private fun getMessage(){
         remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setDeveloperModeEnabled(BuildConfig.DEBUG)
             .setMinimumFetchIntervalInSeconds(4200)
             .build()
         remoteConfig.setConfigSettings(configSettings)
 
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if(task.isSuccessful){
-                Log.e("FirebaseRemote", "Successful!")
                 setupUpdateView()
+                Log.e("FirebaseRemote", "Successful!")
             }
             else{
+                setupUpdateView()
                 Log.e("FirebaseRemote", "Error!")
             }
         }
-
-
-        setupView()
-
-        return rootView
-    }
-
-    private fun setupView(){
-
     }
 
     private fun setupUpdateView(){
@@ -59,7 +57,7 @@ class OtherFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        setupView()
+        getMessage()
     }
 
 

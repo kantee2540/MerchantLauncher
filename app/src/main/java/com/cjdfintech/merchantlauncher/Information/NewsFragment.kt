@@ -24,6 +24,11 @@ class NewsFragment : Fragment(){
         return rootView
     }
 
+    override fun onResume() {
+        super.onResume()
+        getMessage()
+    }
+
     private fun getMessage(){
         remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
