@@ -14,4 +14,5 @@
     <string name="not_installed">คุณยังไม่ได้ติดตั้งFinpoint</string>
     <string name="keep_turnon">โปรดเปิดเครื่องไว้ตลอดการอัพเดท</string>
     <string name="check_for_update"><u>ตรวจสอบอัพเดท</u></string>
+    <string name="if_not_auto">หากไม่สามารถอัพเดทได้อัตโนมัติหรือFinpointยังคงเป็นเวอร์ชั่นเก่า โปรดอัพเดทได้ที่ Appstore หรือติดต่อศูนย์บริการร้านค้า Dolfin</string>
 </resources>
