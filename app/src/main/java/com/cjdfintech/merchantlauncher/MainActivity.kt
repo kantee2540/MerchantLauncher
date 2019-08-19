@@ -1,7 +1,6 @@
 package com.cjdfintech.merchantlauncher
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -21,11 +20,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var allApp: List<ResolveInfo>
 
     lateinit var appRecyclerView: RecyclerView
-    lateinit var saveInstalledApp: SharedPreferences
 
     lateinit var remoteConfig: FirebaseRemoteConfig
 
-    private lateinit var resultDateTime :String
     private var firstOpen = true
     private var allAppCount = 0
 
@@ -46,12 +43,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        saveInstalledApp = getSharedPreferences("saveArrayList", MODE_PRIVATE)
-
         getShowIconProperties()
         addArrayList()
-        intializePager()
-
+        initializePager()
     }
 
     override fun onResume() {
@@ -141,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun intializePager(){
+    private fun initializePager(){
         val informationAdapter = InformationAdapter(supportFragmentManager)
         informationAdapter.addFragment(PromotionFragment())
         informationAdapter.addFragment(CallCenterFragment())
