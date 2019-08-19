@@ -25,9 +25,11 @@ android {
     buildTypes {
         debug{
             buildConfigField("String", "URL1", "\"https://dolfinthailand.com/\"")
+            buildConfigField("String", "URL2", "\"https://google.com/\"")
         }
         release {
             buildConfigField("String", "URL1", "\"https://dolfinthailand.com/\"")
+            buildConfigField("String", "URL2", "\"https://google.com/\"")
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
