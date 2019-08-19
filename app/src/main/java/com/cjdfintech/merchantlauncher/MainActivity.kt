@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.cjdfintech.merchantlauncher.Information.*
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var appRecyclerView: RecyclerView
     lateinit var saveInstalledApp: SharedPreferences
 
+    lateinit var remoteConfig: FirebaseRemoteConfig
+
     private lateinit var resultDateTime :String
     private var firstOpen = true
     private var allAppCount = 0
@@ -36,6 +40,11 @@ class MainActivity : AppCompatActivity() {
         private const val DIPCHIP_PACKAGE = "com.jr.jd.th.ekyc"
         private const val DIPCHIP_NAME = "Dip Chip"
         private const val APPSTORE_PACKAGE = "woyou.market"
+
+        private const val SHOW_FINPOINT = "show_finpoint"
+        private const val SHOW_DIPCHIP = "show_dipchip"
+        private const val SHOW_SETTINGS = "show_settings"
+        private const val SHOW_APPSTORE = "show_appstore"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         saveInstalledApp = getSharedPreferences("saveArrayList", MODE_PRIVATE)
 
+        getShowIconProperties()
         addArrayList()
         updateTimer()
         intializePager()
@@ -59,11 +69,12 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewPager.currentItem = 0
+        getShowIconProperties()
         addArrayList()
     }
 
 
-    fun addArrayList(){
+    private fun addArrayList(){
 
         pm = applicationContext.packageManager
         installedApp = ArrayList()
@@ -73,10 +84,10 @@ class MainActivity : AppCompatActivity() {
 
         allApp = pm.queryIntentActivities(i, 0)
         for (ri: ResolveInfo in allApp){
-            if(ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE)
-                || ri.activityInfo.packageName == SETTINGS_PACKAGE
-                || ri.activityInfo.packageName == DIPCHIP_PACKAGE
-                || ri.activityInfo.packageName == APPSTORE_PACKAGE) {
+            if((ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE) && remoteConfig.getBoolean(SHOW_FINPOINT))
+                || (ri.activityInfo.packageName == SETTINGS_PACKAGE && remoteConfig.getBoolean(SHOW_SETTINGS))
+                || (ri.activityInfo.packageName == DIPCHIP_PACKAGE && remoteConfig.getBoolean(SHOW_DIPCHIP))
+                || ri.activityInfo.packageName == APPSTORE_PACKAGE && remoteConfig.getBoolean(SHOW_APPSTORE)) {
                 val app = AppInfo()
                 if (ri.activityInfo.packageName == DIPCHIP_PACKAGE){
                     app.label = DIPCHIP_NAME
@@ -122,8 +133,22 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
     }
 
-    private fun checkAppListIsChanged(){
+    private fun getShowIconProperties(){
+        remoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setDeveloperModeEnabled(BuildConfig.DEBUG)
+            .setMinimumFetchIntervalInSeconds(4200)
+            .build()
+        remoteConfig.setConfigSettings(configSettings)
 
+        remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                Log.e("FirebaseRemote", "Successful!")
+            }
+            else{
+                Log.e("FirebaseRemote", "Error!")
+            }
+        }
     }
 
     private fun intializePager(){
@@ -150,7 +175,6 @@ class MainActivity : AppCompatActivity() {
         val timer= Timer()
         timer?.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
-                //addArrayList()
                 runOnUiThread {
                     val date = Date()
                     resultDateTime = formatTime.format(date)
