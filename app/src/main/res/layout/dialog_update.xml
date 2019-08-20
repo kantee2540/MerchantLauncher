@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:background="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout2"
+        android:padding="15dp" android:orientation="vertical">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:fontFamily="@font/font_the1_bold"
+            android:text="@string/dialog_new_update" android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/textView6"
+            android:drawableStart="@drawable/ic_update_black_24dp"
+            android:drawablePadding="10dp"
+    />
+
+    <TextView
+            android:text="@string/dialog_new_update_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:id="@+id/textView5"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_the1_regular"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
+        <Button
+                android:text="@string/update_p1"
+                android:foreground="?selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" android:id="@+id/update_btn"
+                android:textColor="@android:color/white"
+                android:background="@drawable/positive_button"
+                android:layout_weight="1"
+                android:layout_marginEnd="7dp" android:fontFamily="@font/font_the1_regular"/>
+        <Button
+                android:text="@string/cancel"
+                android:foreground="?selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" android:id="@+id/cancel_btn"
+                android:background="@drawable/negative_button"
+                android:layout_weight="1" android:fontFamily="@font/font_the1_regular"/>
+    </LinearLayout>
+
+
+</LinearLayout>
