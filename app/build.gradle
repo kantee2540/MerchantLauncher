@@ -24,7 +24,7 @@ android {
     }
     buildTypes {
         debug{
-            buildConfigField("String", "URL1", "\"https://dolfinthailand.com/\"")
+            buildConfigField("String", "URL1", "\"https://merchant-launcher.firebaseapp.com/displayFragment.html\"")
             buildConfigField("String", "URL2", "\"https://google.com/\"")
         }
         release {

@@ -58,12 +58,14 @@ class MainActivity : AppCompatActivity() {
         viewPager.currentItem = 0
         getShowIconProperties()
         addArrayList()
+        dialogBuild()
         checkUpdateApp()
     }
 
     override fun onPause() {
         super.onPause()
-        dialog.dismiss()
+        if(dialog.isShowing)
+            dialog.dismiss()
     }
 
 
@@ -167,21 +169,24 @@ class MainActivity : AppCompatActivity() {
         appRecyclerView.adapter = AppHomeAdapter(installedApp, this)
     }
 
+    private fun dialogBuild(){
+        dialog = Dialog(this)
+        dialog.setTitle(getString(R.string.dialog_new_update))
+        dialog.setContentView(R.layout.dialog_update)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.update_btn.setOnClickListener {
+            val intent = pm.getLaunchIntentForPackage(APPSTORE_PACKAGE)
+            startActivity(intent)
+        }
+
+        dialog.cancel_btn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+    }
+
     private fun checkUpdateApp(){
         if(remoteConfig.getBoolean("new_version")) {
-            dialog = Dialog(this)
-            dialog.setTitle(getString(R.string.dialog_new_update))
-            dialog.setContentView(R.layout.dialog_update)
-            dialog.setCanceledOnTouchOutside(false)
-            dialog.update_btn.setOnClickListener {
-                val intent = pm.getLaunchIntentForPackage(APPSTORE_PACKAGE)
-                startActivity(intent)
-            }
-
-            dialog.cancel_btn.setOnClickListener {
-                dialog.dismiss()
-            }
-
             dialog.show()
         }
     }
