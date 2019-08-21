@@ -151,10 +151,9 @@ class MainActivity : AppCompatActivity() {
     private fun initializePager(){
         val informationAdapter = InformationAdapter(supportFragmentManager)
         informationAdapter.addFragment(PromotionFragment())
-        informationAdapter.addFragment(PromotionFragment2())
-        informationAdapter.addFragment(CallCenterFragment())
-        informationAdapter.addFragment(OtherFragment())
         informationAdapter.addFragment(NewsFragment())
+        informationAdapter.addFragment(OtherFragment())
+        informationAdapter.addFragment(CallCenterFragment())
 
         val informationPager = viewPager
         informationPager.adapter = informationAdapter
