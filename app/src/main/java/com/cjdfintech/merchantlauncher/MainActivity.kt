@@ -14,6 +14,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_update.*
+import java.lang.Exception
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        pm = applicationContext.packageManager
 
         getShowIconProperties()
         addArrayList()
@@ -58,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         viewPager.currentItem = 0
         getShowIconProperties()
         addArrayList()
-        dialogBuild()
         checkUpdateApp()
     }
 
@@ -71,7 +72,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun addArrayList(){
 
-        pm = applicationContext.packageManager
         installedApp = ArrayList()
 
         val i = Intent(Intent.ACTION_MAIN, null)
@@ -168,16 +168,25 @@ class MainActivity : AppCompatActivity() {
         appRecyclerView.adapter = AppHomeAdapter(installedApp, this)
     }
 
-    private fun dialogBuild(){
+    private fun dialogBuild(finpointInstalled: Boolean){
         dialog = Dialog(this)
         dialog.setTitle(getString(R.string.dialog_new_update))
         dialog.setContentView(R.layout.dialog_update)
         dialog.setCanceledOnTouchOutside(false)
+
+        if (finpointInstalled){
+            dialog.title_update_tv.text = getString(R.string.dialog_new_update)
+            dialog.description_update_tv.text = getString(R.string.dialog_new_update_description)
+        }
+        else{
+            dialog.title_update_tv.text = getString(R.string.dialog_not_install)
+            dialog.description_update_tv.text = getString(R.string.dialog_not_install_description)
+        }
+
         dialog.update_btn.setOnClickListener {
             val intent = pm.getLaunchIntentForPackage(APPSTORE_PACKAGE)
             startActivity(intent)
         }
-
         dialog.cancel_btn.setOnClickListener {
             dialog.dismiss()
         }
@@ -185,7 +194,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkUpdateApp(){
-        if(remoteConfig.getBoolean("new_version")) {
+        var finpointVersionCode = 0
+        try{
+            val pInfo = pm.getPackageInfo(FINPOINT_PACKAGE, 0)
+            finpointVersionCode = pInfo.versionCode
+        }catch (e:Exception){
+            Log.e("ERROR", "Finpoint not installed")
+        }
+
+
+        if(finpointVersionCode < remoteConfig.getLong("lastest_finpoint_version_code") && finpointVersionCode != 0) {
+            dialogBuild(true)
+            dialog.show()
+        }
+        else if(finpointVersionCode == 0){
+            dialogBuild(false)
             dialog.show()
         }
     }

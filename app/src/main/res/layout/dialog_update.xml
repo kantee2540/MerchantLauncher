@@ -13,7 +13,7 @@
             android:layout_height="wrap_content" android:fontFamily="@font/font_the1_bold"
             android:text="@string/dialog_new_update" android:textSize="18sp"
             android:textColor="@color/colorPrimary"
-            android:id="@+id/textView6"
+            android:id="@+id/title_update_tv"
             android:drawableStart="@drawable/ic_update_black_24dp"
             android:drawablePadding="10dp"
     />
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:id="@+id/textView5"
+            android:id="@+id/description_update_tv"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/font_the1_regular"/>
     <LinearLayout
