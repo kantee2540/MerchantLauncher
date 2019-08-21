@@ -7,7 +7,6 @@ import android.content.pm.ResolveInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.cjdfintech.merchantlauncher.Information.*
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
         viewPager.currentItem = 0
         getShowIconProperties()
         addArrayList()
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         allApp = pm.queryIntentActivities(i, 0)
         for (ri: ResolveInfo in allApp){
-            if((ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE) && remoteConfig.getBoolean(SHOW_FINPOINT))
+            if((ri.activityInfo.packageName == BuildConfig.finpointPackageName && remoteConfig.getBoolean(SHOW_FINPOINT))
                 || (ri.activityInfo.packageName == SETTINGS_PACKAGE && remoteConfig.getBoolean(SHOW_SETTINGS))
                 || (ri.activityInfo.packageName == DIPCHIP_PACKAGE && remoteConfig.getBoolean(SHOW_DIPCHIP))
                 || ri.activityInfo.packageName == APPSTORE_PACKAGE && remoteConfig.getBoolean(SHOW_APPSTORE)) {
@@ -196,20 +196,23 @@ class MainActivity : AppCompatActivity() {
     private fun checkUpdateApp(){
         var finpointVersionCode = 0
         try{
-            val pInfo = pm.getPackageInfo(FINPOINT_PACKAGE, 0)
+            val pInfo = pm.getPackageInfo(BuildConfig.finpointPackageName, 0)
             finpointVersionCode = pInfo.versionCode
         }catch (e:Exception){
             Log.e("ERROR", "Finpoint not installed")
         }
 
 
-        if(finpointVersionCode < remoteConfig.getLong("lastest_finpoint_version_code") && finpointVersionCode != 0) {
+        if(finpointVersionCode < remoteConfig.getLong(BuildConfig.check_version_finpoint) && finpointVersionCode != 0) {
             dialogBuild(true)
             dialog.show()
         }
         else if(finpointVersionCode == 0){
             dialogBuild(false)
             dialog.show()
+        }
+        else{
+            dialogBuild(true)
         }
     }
 }
