@@ -14,6 +14,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_update.*
 import java.lang.Exception
+import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var remoteConfig: FirebaseRemoteConfig
 
     lateinit var dialog: Dialog
+    lateinit var timer: Timer
 
     private var firstOpen = true
     private var allAppCount = 0
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         getShowIconProperties()
         addArrayList()
         checkUpdateApp()
+        updateUi()
     }
 
     override fun onPause() {
@@ -214,5 +217,23 @@ class MainActivity : AppCompatActivity() {
         else{
             dialogBuild(true)
         }
+    }
+
+    private fun updateUi(){
+        timer = Timer()
+        timer.scheduleAtFixedRate(object : TimerTask(){
+            override fun run() {
+                runOnUiThread {
+                    //Do every 15 minutes
+                    if (dialog.isShowing){
+                        dialog.dismiss()
+                    }
+                    getShowIconProperties()
+                    addArrayList()
+                    checkUpdateApp()
+
+                }
+            }
+        }, 0, 60000 * 15)
     }
 }
