@@ -29,8 +29,6 @@ class NewsFragment : Fragment(){
         val database = FirebaseDatabase.getInstance()
         myRef = database.getReference("message")
 
-        myRef.setValue("helloWorld")
-
         getMessage()
         return rootView
     }
