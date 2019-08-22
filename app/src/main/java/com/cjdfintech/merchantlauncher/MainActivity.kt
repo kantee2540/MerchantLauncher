@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         getShowIconProperties()
         addArrayList()
         checkUpdateApp()
-        updateUi()
     }
 
     override fun onPause() {
@@ -219,21 +218,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUi(){
-        timer = Timer()
-        timer.scheduleAtFixedRate(object : TimerTask(){
-            override fun run() {
-                runOnUiThread {
-                    //Do every 15 minutes
-                    if (dialog.isShowing){
-                        dialog.dismiss()
-                    }
-                    getShowIconProperties()
-                    addArrayList()
-                    checkUpdateApp()
-
-                }
-            }
-        }, 0, 60000 * 15)
-    }
 }
