@@ -19,6 +19,8 @@
 
     <string name="dialog_new_update">มีอัพเดท Finpoint เวอร์ชั่นใหม่</string>
     <string name="dialog_new_update_description">สามารถอัพเดทเวอร์ชั่นใหม่ได้ที่ App Store หากไม่สามารถอัพเดทอัตโนมัติได้</string>
+    <string name="dialog_not_install">คุณยังไม่ได้ติดต้ง Finpoint</string>
+    <string name="dialog_not_install_description">กรุณาดาวโหลด Finpoint ได้ที่ App Store</string>
     <string name="open_app_store">เปิด App Store</string>
     <string name="cancel">ยกเลิก</string>
 </resources>

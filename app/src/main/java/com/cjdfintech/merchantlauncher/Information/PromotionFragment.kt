@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.cjdfintech.merchantlauncher.BuildConfig
 import com.cjdfintech.merchantlauncher.R
-import kotlinx.android.synthetic.main.fragment_promotion.view.*
+import kotlinx.android.synthetic.main.fragment_promotion.*
+import kotlinx.android.synthetic.main.fragment_promotion.view.webView
 
 class PromotionFragment : Fragment() {
 
@@ -22,5 +23,10 @@ class PromotionFragment : Fragment() {
         return rootView
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        webView.reload()
     }
 }
