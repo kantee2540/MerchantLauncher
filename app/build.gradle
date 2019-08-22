@@ -39,18 +39,14 @@ android {
             buildConfigField "Boolean", "isProd", "false"
             buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp.uat\""
             buildConfigField "String", "check_version_finpoint", "\"lastest_finpoint_version_code_uat\""
-
             buildConfigField("String", "URL1", "\"https://merchant-launcher.firebaseapp.com/displayFragment.html\"")
-            buildConfigField("String", "URL2", "\"https://google.com/\"")
         }
         prod {
             dimension = 'default'
             buildConfigField "Boolean", "isProd", "true"
             buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp\""
             buildConfigField "String", "check_version_finpoint", "\"lastest_finpoint_version_code\""
-
             buildConfigField("String", "URL1", "\"https://merchant-launcher.firebaseapp.com/displayFragment.html\"")
-            buildConfigField("String", "URL2", "\"https://google.com/\"")
         }
     }
 }
