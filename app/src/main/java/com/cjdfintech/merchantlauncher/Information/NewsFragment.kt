@@ -18,9 +18,6 @@ import java.lang.ref.Reference
 class NewsFragment : Fragment(){
 
     private lateinit var rootView: View
-
-    lateinit var remoteConfig: FirebaseRemoteConfig
-
     lateinit var myRef: DatabaseReference
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
