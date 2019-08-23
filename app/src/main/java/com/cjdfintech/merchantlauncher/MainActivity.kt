@@ -18,6 +18,12 @@ import org.json.JSONObject
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.util.DisplayMetrics
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -103,16 +109,21 @@ class MainActivity : AppCompatActivity() {
             for(j in 0 until checkPackage.size){
                 if(ri.activityInfo.packageName.startsWith(checkPackage[j].packageName)
                     && checkPackage[j].show){
-
+                    val res = pm.getResourcesForApplication(ri.activityInfo.applicationInfo)
                     val app = AppInfo()
                     if(ri.activityInfo.packageName == DIPCHIP_PACKAGE){
                         app.label = DIPCHIP_NAME
+                        app.icon = ri.activityInfo.loadIcon(pm)
                     }
                     else {
                         app.label = ri.loadLabel(pm)
+                        app.icon = res.getDrawableForDensity(
+                            ri.activityInfo.applicationInfo.icon, DisplayMetrics.DENSITY_XXXHIGH)
+
                     }
                     app.packageName = ri.activityInfo.packageName
-                    app.icon = ri.activityInfo.loadIcon(pm)
+                    //app.icon = ri.activityInfo.loadIcon(pm)
+
                     app.listNumber = j
 
                     installedApp.add(app)
