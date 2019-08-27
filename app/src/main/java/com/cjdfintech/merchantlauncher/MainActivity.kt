@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         pm = applicationContext.packageManager
 
         getShowIconProperties()
-        addArrayList()
         initializePager()
     }
 
@@ -70,7 +69,6 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.currentItem = 0
         getShowIconProperties()
-        addArrayList()
         checkUpdateApp()
     }
 
@@ -159,6 +157,7 @@ class MainActivity : AppCompatActivity() {
 
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if(task.isSuccessful){
+                addArrayList()
                 Log.e("FirebaseRemote", "Successful!")
             }
             else{
