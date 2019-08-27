@@ -14,10 +14,12 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_update.*
 import org.json.JSONArray
-import org.json.JSONObject
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
+import android.util.DisplayMetrics
+import android.view.View
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,10 +45,10 @@ class MainActivity : AppCompatActivity() {
         private const val APPSTORE_PACKAGE = "woyou.market"
         private const val PLAYSTORE_PACKAGE = "com.android.vending"
 
-        private const val SHOW_FINPOINT = "show_finpoint"
-        private const val SHOW_DIPCHIP = "show_dipchip"
-        private const val SHOW_SETTINGS = "show_settings"
-        private const val SHOW_APPSTORE = "show_appstore"
+        private const val PACKAGE_APP_NAME = "package_show_app"
+        private const val REMOTE_APP_NAME = "app_name"
+        private const val REMOTE_PACKAGE = "package"
+        private const val REMOTE_SHOW_APP = "show"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         pm = applicationContext.packageManager
 
         getShowIconProperties()
-        addArrayList()
         initializePager()
     }
 
@@ -64,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.currentItem = 0
         getShowIconProperties()
-        addArrayList()
         checkUpdateApp()
     }
 
@@ -83,19 +83,17 @@ class MainActivity : AppCompatActivity() {
         i.addCategory(Intent.CATEGORY_LAUNCHER)
 
         val checkPackage: ArrayList<RemoteConfigPackage> = ArrayList()
-        val jsonArray = JSONArray(remoteConfig.getString("package_show_app"))
-        Log.e("json", jsonArray.length().toString())
+        val jsonArray = JSONArray(remoteConfig.getString(PACKAGE_APP_NAME))
+
         for(i in 0 until jsonArray.length()){
             val remotePackage = RemoteConfigPackage()
             val obj = jsonArray.getJSONObject(i)
-            remotePackage.appName = obj.getString("app_name")
-            remotePackage.packageName = obj.getString("package")
-            remotePackage.show = obj.getBoolean("show")
+            remotePackage.appName = obj.getString(REMOTE_APP_NAME)
+            remotePackage.packageName = obj.getString(REMOTE_PACKAGE)
+            remotePackage.show = obj.getBoolean(REMOTE_SHOW_APP)
 
             checkPackage.add(remotePackage)
         }
-        Log.e("ARRAY", jsonArray.toString())
-        Log.e("ARRAY_LENGTH", checkPackage.size.toString())
 
         allApp = pm.queryIntentActivities(i, 0)
         for (ri: ResolveInfo in allApp){
@@ -103,55 +101,37 @@ class MainActivity : AppCompatActivity() {
             for(j in 0 until checkPackage.size){
                 if(ri.activityInfo.packageName.startsWith(checkPackage[j].packageName)
                     && checkPackage[j].show){
-
+                    val res = pm.getResourcesForApplication(ri.activityInfo.applicationInfo)
                     val app = AppInfo()
                     if(ri.activityInfo.packageName == DIPCHIP_PACKAGE){
                         app.label = DIPCHIP_NAME
+                        app.icon = ri.activityInfo.loadIcon(pm)
                     }
                     else {
                         app.label = ri.loadLabel(pm)
+                        app.icon = res.getDrawableForDensity(
+                            ri.activityInfo.applicationInfo.icon, DisplayMetrics.DENSITY_XXXHIGH)
+
                     }
                     app.packageName = ri.activityInfo.packageName
-                    app.icon = ri.activityInfo.loadIcon(pm)
+                    //app.icon = ri.activityInfo.loadIcon(pm)
+
                     app.listNumber = j
 
                     installedApp.add(app)
                 }
             }
 
-//            if((ri.activityInfo.packageName == BuildConfig.finpointPackageName && remoteConfig.getBoolean(SHOW_FINPOINT))
-//                || (ri.activityInfo.packageName == SETTINGS_PACKAGE && remoteConfig.getBoolean(SHOW_SETTINGS))
-//                || (ri.activityInfo.packageName == DIPCHIP_PACKAGE && remoteConfig.getBoolean(SHOW_DIPCHIP))
-//                || ri.activityInfo.packageName == APPSTORE_PACKAGE && remoteConfig.getBoolean(SHOW_APPSTORE)) {
-//                val app = AppInfo()
-//                when {
-//                    ri.activityInfo.packageName == DIPCHIP_PACKAGE -> {
-//                        app.label = DIPCHIP_NAME
-//                        app.listNumber = 1
-//                    }
-//                    ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE) -> {
-//                        app.label = ri.loadLabel(pm)
-//                        app.listNumber = 0
-//                    }
-//                    ri.activityInfo.packageName == SETTINGS_PACKAGE -> {
-//                        app.label = ri.loadLabel(pm)
-//                        app.listNumber = 2
-//                    }
-//                    ri.activityInfo.packageName == APPSTORE_PACKAGE -> {
-//                        app.label = ri.loadLabel(pm)
-//                        app.listNumber = 3
-//                    }
-//                }
-//                app.packageName = ri.activityInfo.packageName
-//                app.icon = ri.activityInfo.loadIcon(pm)
-//
-//
-//                installedApp.add(app)
-//            }
-
         }
 
         installedApp.sortBy { it.listNumber }
+
+        if (installedApp.size != 0){
+            no_item_layout.visibility = View.GONE
+        }
+        else{
+            no_item_layout.visibility = View.VISIBLE
+        }
 
 
         if(firstOpen){
@@ -180,6 +160,7 @@ class MainActivity : AppCompatActivity() {
 
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if(task.isSuccessful){
+                addArrayList()
                 Log.e("FirebaseRemote", "Successful!")
             }
             else{
