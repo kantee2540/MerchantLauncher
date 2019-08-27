@@ -49,10 +49,10 @@ class MainActivity : AppCompatActivity() {
         private const val APPSTORE_PACKAGE = "woyou.market"
         private const val PLAYSTORE_PACKAGE = "com.android.vending"
 
-        private const val SHOW_FINPOINT = "show_finpoint"
-        private const val SHOW_DIPCHIP = "show_dipchip"
-        private const val SHOW_SETTINGS = "show_settings"
-        private const val SHOW_APPSTORE = "show_appstore"
+        private const val PACKAGE_APP_NAME = "package_show_app"
+        private const val REMOTE_APP_NAME = "app_name"
+        private const val REMOTE_PACKAGE = "package"
+        private const val REMOTE_SHOW_APP = "show"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,19 +89,17 @@ class MainActivity : AppCompatActivity() {
         i.addCategory(Intent.CATEGORY_LAUNCHER)
 
         val checkPackage: ArrayList<RemoteConfigPackage> = ArrayList()
-        val jsonArray = JSONArray(remoteConfig.getString("package_show_app"))
-        Log.e("json", jsonArray.length().toString())
+        val jsonArray = JSONArray(remoteConfig.getString(PACKAGE_APP_NAME))
+
         for(i in 0 until jsonArray.length()){
             val remotePackage = RemoteConfigPackage()
             val obj = jsonArray.getJSONObject(i)
-            remotePackage.appName = obj.getString("app_name")
-            remotePackage.packageName = obj.getString("package")
-            remotePackage.show = obj.getBoolean("show")
+            remotePackage.appName = obj.getString(REMOTE_APP_NAME)
+            remotePackage.packageName = obj.getString(REMOTE_PACKAGE)
+            remotePackage.show = obj.getBoolean(REMOTE_SHOW_APP)
 
             checkPackage.add(remotePackage)
         }
-        Log.e("ARRAY", jsonArray.toString())
-        Log.e("ARRAY_LENGTH", checkPackage.size.toString())
 
         allApp = pm.queryIntentActivities(i, 0)
         for (ri: ResolveInfo in allApp){
@@ -129,36 +127,6 @@ class MainActivity : AppCompatActivity() {
                     installedApp.add(app)
                 }
             }
-
-//            if((ri.activityInfo.packageName == BuildConfig.finpointPackageName && remoteConfig.getBoolean(SHOW_FINPOINT))
-//                || (ri.activityInfo.packageName == SETTINGS_PACKAGE && remoteConfig.getBoolean(SHOW_SETTINGS))
-//                || (ri.activityInfo.packageName == DIPCHIP_PACKAGE && remoteConfig.getBoolean(SHOW_DIPCHIP))
-//                || ri.activityInfo.packageName == APPSTORE_PACKAGE && remoteConfig.getBoolean(SHOW_APPSTORE)) {
-//                val app = AppInfo()
-//                when {
-//                    ri.activityInfo.packageName == DIPCHIP_PACKAGE -> {
-//                        app.label = DIPCHIP_NAME
-//                        app.listNumber = 1
-//                    }
-//                    ri.activityInfo.packageName.startsWith(FINPOINT_PACKAGE) -> {
-//                        app.label = ri.loadLabel(pm)
-//                        app.listNumber = 0
-//                    }
-//                    ri.activityInfo.packageName == SETTINGS_PACKAGE -> {
-//                        app.label = ri.loadLabel(pm)
-//                        app.listNumber = 2
-//                    }
-//                    ri.activityInfo.packageName == APPSTORE_PACKAGE -> {
-//                        app.label = ri.loadLabel(pm)
-//                        app.listNumber = 3
-//                    }
-//                }
-//                app.packageName = ri.activityInfo.packageName
-//                app.icon = ri.activityInfo.loadIcon(pm)
-//
-//
-//                installedApp.add(app)
-//            }
 
         }
 
