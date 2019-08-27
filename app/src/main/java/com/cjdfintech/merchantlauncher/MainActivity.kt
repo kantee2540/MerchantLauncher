@@ -14,15 +14,11 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_update.*
 import org.json.JSONArray
-import org.json.JSONObject
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.DisplayMetrics
+import android.view.View
 
 
 class MainActivity : AppCompatActivity() {
@@ -129,6 +125,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         installedApp.sortBy { it.listNumber }
+
+        if (installedApp.size != 0){
+            no_item_layout.visibility = View.GONE
+        }
+        else{
+            no_item_layout.visibility = View.VISIBLE
+        }
 
 
         if(firstOpen){
