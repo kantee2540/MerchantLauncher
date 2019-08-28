@@ -16,6 +16,7 @@
     <string name="check_for_update"><u>ตรวจสอบอัพเดท</u></string>
     <string name="if_not_auto">หากไม่สามารถอัพเดทได้อัตโนมัติหรือFinpointยังคงเป็นเวอร์ชั่นเก่า โปรดอัพเดทได้ที่ Appstore หรือติดต่อศูนย์บริการร้านค้า Dolfin</string>
     <string name="message">ข้อความ</string>
+    <string name="message_default">ไม่มีข้อความในขณะนี้</string>
 
     <string name="dialog_new_update">มีอัพเดท Finpoint เวอร์ชั่นใหม่</string>
     <string name="dialog_new_update_description">สามารถอัพเดทเวอร์ชั่นใหม่ได้ที่ App Store หากไม่สามารถอัพเดทอัตโนมัติได้</string>
