@@ -4,9 +4,9 @@ import android.util.Log
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
-class RemoteConfig(callback: RemoteConfigInterface) {
+class RemoteConfig(private val callback: RemoteConfigInterface) {
 
-    init {
+    fun fetchRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
             .setDeveloperModeEnabled(BuildConfig.DEBUG)

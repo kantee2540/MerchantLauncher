@@ -10,7 +10,6 @@ import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.cjdfintech.merchantlauncher.Information.*
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_update.*
 import org.json.JSONArray
@@ -20,7 +19,7 @@ import kotlin.collections.ArrayList
 import android.util.DisplayMetrics
 import android.view.View
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     lateinit var pm: PackageManager
     lateinit var installedApp: ArrayList<AppInfo>
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         pm = applicationContext.packageManager
 
-        getShowIconProperties()
+        getFirebaseRemoteConfigProperties()
         initializePager()
     }
 
@@ -62,8 +61,8 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         viewPager.currentItem = 0
-        getShowIconProperties()
-        checkUpdateApp()
+        getFirebaseRemoteConfigProperties()
+
     }
 
     override fun onPause() {
@@ -74,8 +73,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        getShowIconProperties()
+        getFirebaseRemoteConfigProperties()
+    }
+
+    override fun onSuccessFetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
+        this.remoteConfig = remoteConfig
+        addArrayList()
         checkUpdateApp()
+    }
+
+    override fun onFailedFetchRemoteConfig() {
+        no_item_layout.visibility = View.VISIBLE
     }
 
 
@@ -154,24 +162,9 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
     }
 
-    private fun getShowIconProperties(){
-        remoteConfig = FirebaseRemoteConfig.getInstance()
-        val configSettings = FirebaseRemoteConfigSettings.Builder()
-            .setDeveloperModeEnabled(BuildConfig.DEBUG)
-            .build()
-        remoteConfig.setConfigSettings(configSettings)
-        remoteConfig.fetch(0)
+    private fun getFirebaseRemoteConfigProperties(){
+        RemoteConfig(this).fetchRemoteConfig()
 
-        remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
-            if(task.isSuccessful){
-                addArrayList()
-                Log.e("FirebaseRemote", "Successful!")
-            }
-            else{
-                no_item_layout.visibility = View.VISIBLE
-                Log.e("FirebaseRemote", "Error!")
-            }
-        }
     }
 
     private fun initializePager(){
