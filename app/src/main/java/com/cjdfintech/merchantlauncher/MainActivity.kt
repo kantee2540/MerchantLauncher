@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
             .setDeveloperModeEnabled(BuildConfig.DEBUG)
             .build()
         remoteConfig.setConfigSettings(configSettings)
-        remoteConfig.fetch(1)
+        remoteConfig.fetch(0)
 
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if(task.isSuccessful){
