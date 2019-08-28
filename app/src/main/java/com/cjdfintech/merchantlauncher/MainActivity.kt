@@ -20,7 +20,6 @@ import kotlin.collections.ArrayList
 import android.util.DisplayMetrics
 import android.view.View
 
-
 class MainActivity : AppCompatActivity() {
 
     lateinit var pm: PackageManager
@@ -154,9 +153,9 @@ class MainActivity : AppCompatActivity() {
         remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
             .setDeveloperModeEnabled(BuildConfig.DEBUG)
-            .setMinimumFetchIntervalInSeconds(4200)
             .build()
         remoteConfig.setConfigSettings(configSettings)
+        remoteConfig.fetch(1)
 
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if(task.isSuccessful){
@@ -164,6 +163,7 @@ class MainActivity : AppCompatActivity() {
                 Log.e("FirebaseRemote", "Successful!")
             }
             else{
+                no_item_layout.visibility = View.VISIBLE
                 Log.e("FirebaseRemote", "Error!")
             }
         }
