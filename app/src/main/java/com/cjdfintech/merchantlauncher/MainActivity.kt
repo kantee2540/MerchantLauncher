@@ -72,6 +72,12 @@ class MainActivity : AppCompatActivity() {
             dialog.dismiss()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        getShowIconProperties()
+        checkUpdateApp()
+    }
+
 
     private fun addArrayList(){
 
