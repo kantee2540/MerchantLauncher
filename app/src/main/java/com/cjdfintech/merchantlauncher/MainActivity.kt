@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         private const val APPSTORE_PACKAGE = "woyou.market"
         private const val PLAYSTORE_PACKAGE = "com.android.vending"
 
-        private const val PACKAGE_APP_NAME = "package_show_app"
         private const val REMOTE_APP_NAME = "app_name"
         private const val REMOTE_PACKAGE = "package"
         private const val REMOTE_SHOW_APP = "show"
@@ -82,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         i.addCategory(Intent.CATEGORY_LAUNCHER)
 
         val checkPackage: ArrayList<RemoteConfigPackage> = ArrayList()
-        val jsonArray = JSONArray(remoteConfig.getString(PACKAGE_APP_NAME))
+        val jsonArray = JSONArray(remoteConfig.getString(BuildConfig.packageShowApp))
 
         for(i in 0 until jsonArray.length()){
             val remotePackage = RemoteConfigPackage()
@@ -205,11 +204,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         dialog.update_btn.setOnClickListener {
-            if(pm.getPackageInfo(APPSTORE_PACKAGE, 0) != null) {
+            try {
                 val intent = pm.getLaunchIntentForPackage(APPSTORE_PACKAGE)
                 startActivity(intent)
             }
-            else{
+            catch (e:Exception){
                 val intent = pm.getLaunchIntentForPackage(PLAYSTORE_PACKAGE)
                 startActivity(intent)
             }
