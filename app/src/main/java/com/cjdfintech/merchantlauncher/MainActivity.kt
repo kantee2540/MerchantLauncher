@@ -24,13 +24,9 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
     lateinit var pm: PackageManager
     lateinit var installedApp: ArrayList<AppInfo>
     lateinit var allApp: List<ResolveInfo>
-
     lateinit var appRecyclerView: RecyclerView
-
     lateinit var remoteConfig: FirebaseRemoteConfig
-
     lateinit var dialog: Dialog
-    lateinit var timer: Timer
 
     private var firstOpen = true
     private var allAppCount = 0
@@ -52,6 +48,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         pm = applicationContext.packageManager
+        installedApp = ArrayList()
 
         getFirebaseRemoteConfigProperties()
         initializePager()
@@ -83,13 +80,17 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
     }
 
     override fun onFailedFetchRemoteConfig() {
-        no_item_layout.visibility = View.VISIBLE
+        if(installedApp.size != 0){
+            no_item_layout.visibility = View.GONE
+        }
+        else{
+            no_item_layout.visibility = View.VISIBLE
+        }
         dialogBuild(false)
     }
 
 
     private fun addArrayList(){
-
         installedApp = ArrayList()
 
         val i = Intent(Intent.ACTION_MAIN, null)
