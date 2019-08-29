@@ -1,7 +1,10 @@
 package com.cjdfintech.merchantlauncher
 
+import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -14,22 +17,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_update.*
 import org.json.JSONArray
 import java.lang.Exception
-import java.util.*
 import kotlin.collections.ArrayList
 import android.util.DisplayMetrics
 import android.view.View
 
 class MainActivity : AppCompatActivity(), RemoteConfigInterface {
-
-    lateinit var pm: PackageManager
-    lateinit var installedApp: ArrayList<AppInfo>
-    lateinit var allApp: List<ResolveInfo>
-    lateinit var appRecyclerView: RecyclerView
-    lateinit var remoteConfig: FirebaseRemoteConfig
-    lateinit var dialog: Dialog
-
-    private var firstOpen = true
-    private var allAppCount = 0
 
     companion object{
         private const val FINPOINT_PACKAGE = "com.cjdfintech.merchantapp"
@@ -42,13 +34,29 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         private const val REMOTE_APP_NAME = "app_name"
         private const val REMOTE_PACKAGE = "package"
         private const val REMOTE_SHOW_APP = "show"
+
+        private const val SAVE_INSTALLED_LIST = "save_install_list"
     }
+
+    lateinit var pm: PackageManager
+    lateinit var installedApp: ArrayList<AppInfo>
+    lateinit var allApp: List<ResolveInfo>
+    lateinit var appRecyclerView: RecyclerView
+    lateinit var remoteConfig: FirebaseRemoteConfig
+    lateinit var dialog: Dialog
+
+    private var firstOpen = true
+    private var allAppCount = 0
+
+    lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         pm = applicationContext.packageManager
         installedApp = ArrayList()
+
+        sharedPref = this.getSharedPreferences(SAVE_INSTALLED_LIST, Context.MODE_PRIVATE)
 
         getFirebaseRemoteConfigProperties()
         initializePager()
@@ -64,8 +72,13 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     override fun onPause() {
         super.onPause()
-        if(dialog.isShowing)
-            dialog.dismiss()
+        try {
+            if(dialog.isShowing)
+                dialog.dismiss()
+        }catch (e:Exception){
+
+        }
+
     }
 
     override fun onBackPressed() {
@@ -87,6 +100,8 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
             no_item_layout.visibility = View.VISIBLE
         }
         dialogBuild(false)
+        if(sharedPref.getString("json", "") != "")
+            addArrayList()
     }
 
 
@@ -96,8 +111,14 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         val i = Intent(Intent.ACTION_MAIN, null)
         i.addCategory(Intent.CATEGORY_LAUNCHER)
 
+        try {
+            addToSharedPreference(remoteConfig.getString(BuildConfig.packageShowApp))
+        }catch (e:Exception){
+            Log.e("ERROR", "Cannot get firebase remote config")
+        }
+
         val checkPackage: ArrayList<RemoteConfigPackage> = ArrayList()
-        val jsonArray = JSONArray(remoteConfig.getString(BuildConfig.packageShowApp))
+        val jsonArray = JSONArray(sharedPref.getString("json", ""))
 
         for(i in 0 until jsonArray.length()){
             val remotePackage = RemoteConfigPackage()
@@ -162,6 +183,13 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         }
 
         setupRecyclerView()
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private fun addToSharedPreference(json: String){
+        val editor = sharedPref.edit()
+        editor.putString("json", json)
+        editor.apply()
     }
 
     private fun getFirebaseRemoteConfigProperties(){
