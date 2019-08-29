@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     override fun onFailedFetchRemoteConfig() {
         no_item_layout.visibility = View.VISIBLE
+        dialogBuild(false)
     }
 
 

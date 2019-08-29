@@ -9,10 +9,43 @@
         android:background="@android:color/background_light">
 
     <WebView
+            android:id="@+id/webView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:id="@+id/webView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent">
+
+    </WebView>
+
+    <LinearLayout
+            android:id="@+id/cannot_load_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone">
+
+        <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_error_outline_black_24dp" />
+
+        <TextView
+               android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cannot_load"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_the1_regular"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

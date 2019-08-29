@@ -27,4 +27,6 @@
 
     <string name="no_item">ไม่มีแอพลิเคชั่นที่แสดงอยู่ในขณะนี้</string>
     <string name="no_item_description">โปรดเชื่อมต่ออินเตอร์เน็ตใหม่ หรือติดต่อศูนย์บริการร้านค้า Dolfin</string>
+
+    <string name="cannot_load">ไม่สามารถดาวโหลดข้อมูลได้</string>
 </resources>

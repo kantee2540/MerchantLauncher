@@ -44,7 +44,8 @@ class OtherFragment : Fragment(), RemoteConfigInterface {
     }
 
     override fun onFailedFetchRemoteConfig() {
-        setupUpdateView()
+        rootView.nextupdate_tv.text = getString(R.string.no_update_schedule)
+        rootView.instruction_layout.visibility = View.GONE
     }
 
     override fun onResume() {
