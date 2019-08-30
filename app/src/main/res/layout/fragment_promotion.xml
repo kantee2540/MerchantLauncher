@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
         <ImageView
                 android:id="@+id/imageView4"
@@ -46,6 +46,14 @@
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/font_the1_regular"/>
+        <Button
+                android:id="@+id/try_again_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/negative_button"
+                android:fontFamily="@font/font_the1_regular"
+            android:text="@string/try_again"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

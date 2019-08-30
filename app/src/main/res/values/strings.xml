@@ -29,4 +29,5 @@
     <string name="no_item_description">โปรดเชื่อมต่ออินเตอร์เน็ตใหม่ หรือติดต่อศูนย์บริการร้านค้า Dolfin</string>
 
     <string name="cannot_load">ไม่สามารถดาวโหลดข้อมูลได้</string>
+    <string name="try_again">ลองอีกครั้ง</string>
 </resources>

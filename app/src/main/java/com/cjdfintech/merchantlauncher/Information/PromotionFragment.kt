@@ -20,11 +20,15 @@ class PromotionFragment : Fragment(), RemoteConfigInterface {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_promotion, container, false)
 
-        RemoteConfig(this).fetchRemoteConfig()
+        getFirebaseRemoteConfig()
 
         return rootView
 
 
+    }
+
+    private fun getFirebaseRemoteConfig(){
+        RemoteConfig(this).fetchRemoteConfig()
     }
 
     override fun onSuccessFetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
@@ -40,6 +44,9 @@ class PromotionFragment : Fragment(), RemoteConfigInterface {
     override fun onFailedFetchRemoteConfig() {
         rootView.cannot_load_layout.visibility = View.VISIBLE
         rootView.webView.visibility = View.GONE
+        rootView.try_again_btn.setOnClickListener {
+            getFirebaseRemoteConfig()
+        }
     }
 
     override fun onResume() {
