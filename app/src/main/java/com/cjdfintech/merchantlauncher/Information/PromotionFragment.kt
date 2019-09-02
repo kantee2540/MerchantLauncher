@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.cjdfintech.merchantlauncher.R
 import com.cjdfintech.merchantlauncher.RemoteConfig
 import com.cjdfintech.merchantlauncher.RemoteConfigInterface
@@ -38,10 +40,17 @@ class PromotionFragment : Fragment(), RemoteConfigInterface {
         rootView.cannot_load_layout.visibility = View.GONE
         rootView.webView.visibility = View.VISIBLE
         rootView.full_web_view_button.visibility = View.VISIBLE
-        rootView.full_web_view_button.setOnClickListener {
-            val intent = Intent(rootView.context, FullWebviewActivity::class.java)
-            intent.putExtra("webUrl", webUrl)
-            startActivity(intent)
+
+
+        rootView.webView.webViewClient = object : WebViewClient(){
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                rootView.full_web_view_button.setOnClickListener {
+                    val intent = Intent(rootView.context, FullWebviewActivity::class.java)
+                    intent.putExtra("webUrl", url)
+                    startActivity(intent)
+                }
+            }
         }
 
         val webView = rootView.webView

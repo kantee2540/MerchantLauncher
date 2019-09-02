@@ -21,7 +21,7 @@ class RemoteConfig(private val callback: RemoteConfigInterface) {
             }
             else{
                 callback.onFailedFetchRemoteConfig()
-                Log.e("FirebaseRemote", "Error!")
+                Log.e("FirebaseRemote", task.exception.toString())
             }
         }
     }
