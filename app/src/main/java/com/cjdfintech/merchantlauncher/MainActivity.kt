@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
         sharedPref = this.getSharedPreferences(SAVE_INSTALLED_LIST, Context.MODE_PRIVATE)
 
+        dialogBuild()
         getFirebaseRemoteConfigProperties()
         initializePager()
     }
@@ -72,12 +73,6 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     override fun onPause() {
         super.onPause()
-        try {
-            if(dialog.isShowing)
-                dialog.dismiss()
-        }catch (e:Exception){
-
-        }
 
     }
 
@@ -88,6 +83,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     override fun onSuccessFetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
         this.remoteConfig = remoteConfig
+
         addArrayList()
         checkUpdateApp()
     }
@@ -99,7 +95,6 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         else{
             no_item_layout.visibility = View.VISIBLE
         }
-        dialogBuild(false)
         if(sharedPref.getString("json", "") != "")
             addArrayList()
     }
@@ -217,20 +212,11 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         appRecyclerView.adapter = AppHomeAdapter(installedApp, this)
     }
 
-    private fun dialogBuild(finpointInstalled: Boolean){
+    private fun dialogBuild(){
         dialog = Dialog(this)
         dialog.setTitle(getString(R.string.dialog_new_update))
         dialog.setContentView(R.layout.dialog_update)
         dialog.setCanceledOnTouchOutside(false)
-
-        if (finpointInstalled){
-            dialog.title_update_tv.text = getString(R.string.dialog_new_update)
-            dialog.description_update_tv.text = getString(R.string.dialog_new_update_description)
-        }
-        else{
-            dialog.title_update_tv.text = getString(R.string.dialog_not_install)
-            dialog.description_update_tv.text = getString(R.string.dialog_not_install_description)
-        }
 
         dialog.update_btn.setOnClickListener {
             try {
@@ -259,15 +245,17 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
 
         if(finpointVersionCode < remoteConfig.getLong(BuildConfig.check_version_finpoint) && finpointVersionCode != 0) {
-            dialogBuild(true)
+            dialog.title_update_tv.text = getString(R.string.dialog_new_update)
+            dialog.description_update_tv.text = getString(R.string.dialog_new_update_description)
             dialog.show()
         }
         else if(finpointVersionCode == 0){
-            dialogBuild(false)
+            dialog.title_update_tv.text = getString(R.string.dialog_not_install)
+            dialog.description_update_tv.text = getString(R.string.dialog_not_install_description)
             dialog.show()
         }
         else{
-            dialogBuild(true)
+
         }
     }
 
