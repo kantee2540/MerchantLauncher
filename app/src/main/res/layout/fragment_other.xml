@@ -37,6 +37,17 @@
                 android:textColor="@android:color/white" android:fontFamily="@font/font_the1_regular"
                 android:textSize="16sp"/>
 
+        <TextView
+                android:id="@+id/check_update_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/font_the1_regular"
+                android:drawableStart="@drawable/ic_refresh_black_24dp"
+                android:drawablePadding="5dp"
+                android:text="@string/check_for_update" />
+
+
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"

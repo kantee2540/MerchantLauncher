@@ -31,10 +31,15 @@ class OtherFragment : Fragment(), RemoteConfigInterface {
         if(!remoteConfig.getString("next_update").isEmpty()) {
             rootView.nextupdate_tv.text = remoteConfig.getString("next_update")
             rootView.instruction_layout.visibility = View.VISIBLE
+            rootView.check_update_link.visibility = View.GONE
         }
         else{
             rootView.nextupdate_tv.text = getString(R.string.no_update_schedule)
             rootView.instruction_layout.visibility = View.GONE
+            rootView.check_update_link.visibility = View.VISIBLE
+            rootView.check_update_link.setOnClickListener {
+                getMessage()
+            }
         }
     }
 
