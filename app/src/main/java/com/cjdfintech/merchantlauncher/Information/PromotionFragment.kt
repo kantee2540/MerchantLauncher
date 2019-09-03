@@ -3,6 +3,8 @@ package com.cjdfintech.merchantlauncher.Information
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +24,7 @@ class PromotionFragment : Fragment(), RemoteConfigInterface {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_promotion, container, false)
 
+        updateConfig()
         getFirebaseRemoteConfig()
 
         return rootView
@@ -72,5 +75,19 @@ class PromotionFragment : Fragment(), RemoteConfigInterface {
     override fun onResume() {
         super.onResume()
         RemoteConfig(this).fetchRemoteConfig()
+    }
+
+    private fun updateConfig(){
+        //Update Every 1 minutes
+        val mHandler = Handler()
+        val mHandlerTask = object : Runnable {
+            override fun run() {
+                getFirebaseRemoteConfig()
+                Log.e("Update", "Updated")
+                mHandler.postDelayed(this, 1000 * 60 * 1)
+            }
+        }
+
+        mHandlerTask.run()
     }
 }

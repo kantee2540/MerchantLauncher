@@ -21,7 +21,6 @@ import java.lang.Exception
 import kotlin.collections.ArrayList
 import android.util.DisplayMetrics
 import android.view.View
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
@@ -87,7 +86,6 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     override fun onSuccessFetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
         this.remoteConfig = remoteConfig
-
         addArrayList()
         checkUpdateApp()
     }
@@ -272,7 +270,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
             override fun run() {
                 getFirebaseRemoteConfigProperties()
                 Log.e("Update", "Updated")
-                mHandler.postDelayed(this, 1000 * 60 * 3)
+                mHandler.postDelayed(this, 1000 * 60 * 2)
             }
         }
 
