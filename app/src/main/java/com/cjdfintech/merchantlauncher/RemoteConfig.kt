@@ -12,7 +12,7 @@ class RemoteConfig(private val callback: RemoteConfigInterface) {
             .setDeveloperModeEnabled(BuildConfig.DEBUG)
             .build()
         remoteConfig.setConfigSettings(configSettings)
-        remoteConfig.fetch(10)
+        remoteConfig.fetch(1)
 
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if(task.isSuccessful){

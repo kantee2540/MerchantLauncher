@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.cjdfintech.merchantlauncher.Information.*
@@ -20,6 +21,7 @@ import java.lang.Exception
 import kotlin.collections.ArrayList
 import android.util.DisplayMetrics
 import android.view.View
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
     private var allAppCount = 0
 
     lateinit var sharedPref: SharedPreferences
+    lateinit var mHandlerTask: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +61,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
         sharedPref = this.getSharedPreferences(SAVE_INSTALLED_LIST, Context.MODE_PRIVATE)
 
+        updateConfig()
         dialogBuild()
         getFirebaseRemoteConfigProperties()
         initializePager()
@@ -244,7 +248,9 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         }
 
 
-        if(finpointVersionCode < remoteConfig.getLong(BuildConfig.check_version_finpoint) && finpointVersionCode != 0) {
+        if(finpointVersionCode < remoteConfig.getLong(BuildConfig.check_version_finpoint)
+            && finpointVersionCode != 0
+            || remoteConfig.getBoolean(BuildConfig.openAppStore)) {
             dialog.title_update_tv.text = getString(R.string.dialog_new_update)
             dialog.description_update_tv.text = getString(R.string.dialog_new_update_description)
             dialog.show()
@@ -257,6 +263,20 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         else{
 
         }
+    }
+
+    private fun updateConfig(){
+        //Update Every 3 minutes
+        val mHandler = Handler()
+        mHandlerTask = object : Runnable {
+            override fun run() {
+                getFirebaseRemoteConfigProperties()
+                Log.e("Update", "Updated")
+                mHandler.postDelayed(this, 1000 * 60 * 3)
+            }
+        }
+
+        mHandlerTask.run()
     }
 
 }
