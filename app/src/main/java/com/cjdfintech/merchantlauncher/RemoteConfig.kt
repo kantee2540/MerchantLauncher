@@ -9,7 +9,6 @@ class RemoteConfig(private val callback: RemoteConfigInterface) {
     fun fetchRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
-            .setDeveloperModeEnabled(BuildConfig.DEBUG)
             .build()
         remoteConfig.setConfigSettings(configSettings)
         remoteConfig.fetch(1)

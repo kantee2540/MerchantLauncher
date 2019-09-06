@@ -1,31 +1,27 @@
 package com.cjdfintech.merchantlauncher.Information
 
 import android.os.Bundle
-import android.renderscript.Sampler
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.cjdfintech.merchantlauncher.BuildConfig
 import com.cjdfintech.merchantlauncher.R
-import com.google.firebase.database.*
+import com.cjdfintech.merchantlauncher.RemoteConfig
+import com.cjdfintech.merchantlauncher.RemoteConfigInterface
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.fragment_news.view.*
-import java.lang.ref.Reference
+import java.nio.charset.StandardCharsets
 
-class NewsFragment : Fragment(){
+class NewsFragment : Fragment(), RemoteConfigInterface{
 
     private lateinit var rootView: View
-    lateinit var myRef: DatabaseReference
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_news, container, false)
 
-        val database = FirebaseDatabase.getInstance()
-        myRef = database.getReference("message")
-
+        updateConfig()
         getMessage()
         return rootView
     }
@@ -36,17 +32,31 @@ class NewsFragment : Fragment(){
     }
 
     private fun getMessage(){
+        RemoteConfig(this).fetchRemoteConfig()
+    }
 
-        myRef.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val value = dataSnapshot.getValue(String::class.java)
-                rootView.message_tv.text = value
+    override fun onSuccessFetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
+        val mess = remoteConfig.getString("message").toByteArray(StandardCharsets.ISO_8859_1)
+        val newValue = String(mess, StandardCharsets.UTF_8)
+        Log.e("MESSAGE",newValue)
+        rootView.message_tv.text = newValue
+    }
+
+    override fun onFailedFetchRemoteConfig() {
+        rootView.message_tv.text = "เกิดข้อผิดพลาด"
+    }
+
+    private fun updateConfig(){
+        //Update Every 1 minutes
+        val mHandler = Handler()
+        val mHandlerTask = object : Runnable {
+            override fun run() {
+                getMessage()
+                Log.e("Update", "Updated")
+                mHandler.postDelayed(this, 1000 * 60 * 2)
             }
+        }
 
-            override fun onCancelled(dataSnapshot: DatabaseError) {
-                rootView.message_tv.text = "Oops! Failed"
-            }
-        })
-
+        mHandlerTask.run()
     }
 }
