@@ -264,7 +264,6 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
     }
 
     private fun updateConfig(){
-        //Update Every 3 minutes
         val mHandler = Handler()
         mHandlerTask = object : Runnable {
             override fun run() {
