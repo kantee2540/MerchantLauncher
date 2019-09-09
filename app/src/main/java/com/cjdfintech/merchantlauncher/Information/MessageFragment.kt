@@ -12,15 +12,15 @@ import com.cjdfintech.merchantlauncher.R
 import com.cjdfintech.merchantlauncher.RemoteConfig
 import com.cjdfintech.merchantlauncher.RemoteConfigInterface
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kotlinx.android.synthetic.main.fragment_news.view.*
+import kotlinx.android.synthetic.main.fragment_message.view.*
 import java.nio.charset.StandardCharsets
 
-class NewsFragment : Fragment(), RemoteConfigInterface{
+class MessageFragment : Fragment(), RemoteConfigInterface{
 
     private lateinit var rootView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_news, container, false)
+        rootView = inflater.inflate(R.layout.fragment_message, container, false)
 
         updateConfig()
         getMessage()
