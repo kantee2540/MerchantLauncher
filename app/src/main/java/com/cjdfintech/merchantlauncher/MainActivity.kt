@@ -198,7 +198,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         val informationAdapter = InformationAdapter(supportFragmentManager)
         informationAdapter.addFragment(PromotionFragment())
         informationAdapter.addFragment(MessageFragment())
-        informationAdapter.addFragment(OtherFragment())
+        informationAdapter.addFragment(NextUpdateFragment())
         informationAdapter.addFragment(CallCenterFragment())
 
         val informationPager = viewPager

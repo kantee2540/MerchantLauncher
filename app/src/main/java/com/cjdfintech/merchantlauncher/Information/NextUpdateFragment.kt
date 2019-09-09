@@ -10,16 +10,16 @@ import com.cjdfintech.merchantlauncher.R
 import com.cjdfintech.merchantlauncher.RemoteConfig
 import com.cjdfintech.merchantlauncher.RemoteConfigInterface
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kotlinx.android.synthetic.main.fragment_other.view.*
+import kotlinx.android.synthetic.main.fragment_next_update.view.*
 
-class OtherFragment : Fragment(), RemoteConfigInterface {
+class NextUpdateFragment : Fragment(), RemoteConfigInterface {
 
     private lateinit var rootView: View
 
     lateinit var remoteConfig: FirebaseRemoteConfig
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_other, container, false)
+        rootView = inflater.inflate(R.layout.fragment_next_update, container, false)
         getMessage()
         return rootView
     }
