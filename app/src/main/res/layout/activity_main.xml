@@ -62,7 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:overScrollMode="never"/>
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
