@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.cjdfintech.merchantlauncher.BuildConfig
 import com.cjdfintech.merchantlauncher.R
 import com.cjdfintech.merchantlauncher.RemoteConfig
 import com.cjdfintech.merchantlauncher.RemoteConfigInterface
@@ -38,7 +39,7 @@ class PromotionFragment : Fragment(), RemoteConfigInterface {
 
     @SuppressLint("RestrictedApi")
     override fun onSuccessFetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
-        val webUrl = remoteConfig.getString("web1")
+        val webUrl = remoteConfig.getString(BuildConfig.web1)
 
         rootView.cannot_load_layout.visibility = View.GONE
         rootView.webView.visibility = View.VISIBLE

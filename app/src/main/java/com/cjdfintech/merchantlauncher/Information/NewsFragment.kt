@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.cjdfintech.merchantlauncher.BuildConfig
 import com.cjdfintech.merchantlauncher.R
 import com.cjdfintech.merchantlauncher.RemoteConfig
 import com.cjdfintech.merchantlauncher.RemoteConfigInterface
@@ -36,7 +37,7 @@ class NewsFragment : Fragment(), RemoteConfigInterface{
     }
 
     override fun onSuccessFetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
-        val mess = remoteConfig.getString("message").toByteArray(StandardCharsets.ISO_8859_1)
+        val mess = remoteConfig.getString(BuildConfig.message).toByteArray(StandardCharsets.ISO_8859_1)
         val newValue = String(mess, StandardCharsets.UTF_8)
         Log.e("MESSAGE",newValue)
         rootView.message_tv.text = newValue

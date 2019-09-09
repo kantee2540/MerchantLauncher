@@ -41,6 +41,9 @@ android {
             buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp.uat\""
             buildConfigField "String", "check_version_finpoint", "\"lastest_finpoint_version_code_uat\""
             buildConfigField "String", "openAppStore", "\"open_app_store_uat\""
+            buildConfigField "String", "web1", "\"web1_uat\""
+            buildConfigField "String", "message", "\"message_uat\""
+            buildConfigField "String", "nextUpdate", "\"next_update_uat\""
         }
         prod {
             dimension = 'default'
@@ -49,6 +52,9 @@ android {
             buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp\""
             buildConfigField "String", "check_version_finpoint", "\"lastest_finpoint_version_code\""
             buildConfigField "String", "openAppStore", "\"open_app_store\""
+            buildConfigField "String", "web1", "\"web1\""
+            buildConfigField "String", "message", "\"message\""
+            buildConfigField "String", "nextUpdate", "\"next_update\""
         }
     }
 }

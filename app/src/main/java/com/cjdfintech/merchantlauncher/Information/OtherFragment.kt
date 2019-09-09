@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cjdfintech.merchantlauncher.BuildConfig
 import com.cjdfintech.merchantlauncher.R
 import com.cjdfintech.merchantlauncher.RemoteConfig
 import com.cjdfintech.merchantlauncher.RemoteConfigInterface
@@ -28,8 +29,8 @@ class OtherFragment : Fragment(), RemoteConfigInterface {
     }
 
     private fun setupUpdateView(){
-        if(!remoteConfig.getString("next_update").isEmpty()) {
-            rootView.nextupdate_tv.text = remoteConfig.getString("next_update")
+        if(!remoteConfig.getString(BuildConfig.nextUpdate).isEmpty()) {
+            rootView.nextupdate_tv.text = remoteConfig.getString(BuildConfig.nextUpdate)
             rootView.instruction_layout.visibility = View.VISIBLE
             rootView.check_update_link.visibility = View.GONE
         }
