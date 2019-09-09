@@ -16,14 +16,14 @@ import com.cjdfintech.merchantlauncher.R
 import com.cjdfintech.merchantlauncher.RemoteConfig
 import com.cjdfintech.merchantlauncher.RemoteConfigInterface
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kotlinx.android.synthetic.main.fragment_promotion.view.*
+import kotlinx.android.synthetic.main.fragment_web.view.*
 
-class PromotionFragment : Fragment(), RemoteConfigInterface {
+class WebFragment : Fragment(), RemoteConfigInterface {
 
     lateinit var rootView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_promotion, container, false)
+        rootView = inflater.inflate(R.layout.fragment_web, container, false)
 
         updateConfig()
         getFirebaseRemoteConfig()

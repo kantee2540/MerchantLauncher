@@ -196,7 +196,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     private fun initializePager(){
         val informationAdapter = InformationAdapter(supportFragmentManager)
-        informationAdapter.addFragment(PromotionFragment())
+        informationAdapter.addFragment(WebFragment())
         informationAdapter.addFragment(MessageFragment())
         informationAdapter.addFragment(NextUpdateFragment())
         informationAdapter.addFragment(CallCenterFragment())
