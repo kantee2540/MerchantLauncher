@@ -10,7 +10,6 @@ import android.content.pm.ResolveInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.cjdfintech.merchantlauncher.Information.*
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -37,6 +36,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         private const val REMOTE_SHOW_APP = "show"
 
         private const val SAVE_INSTALLED_LIST = "save_install_list"
+        private const val JSON = "json"
     }
 
     lateinit var pm: PackageManager
@@ -74,11 +74,6 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     }
 
-    override fun onPause() {
-        super.onPause()
-
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         getFirebaseRemoteConfigProperties()
@@ -97,7 +92,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         else{
             no_item_layout.visibility = View.VISIBLE
         }
-        if(sharedPref.getString("json", "") != "")
+        if(sharedPref.getString(JSON, "") != "")
             addArrayList()
     }
 
@@ -111,11 +106,11 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         try {
             addToSharedPreference(remoteConfig.getString(BuildConfig.packageShowApp))
         }catch (e:Exception){
-            Log.e("ERROR", "Cannot get firebase remote config")
+            e.printStackTrace()
         }
 
         val checkPackage: ArrayList<RemoteConfigPackage> = ArrayList()
-        val jsonArray = JSONArray(sharedPref.getString("json", ""))
+        val jsonArray = JSONArray(sharedPref.getString(JSON, ""))
 
         for(i in 0 until jsonArray.length()){
             val remotePackage = RemoteConfigPackage()
@@ -175,7 +170,6 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
             runOnUiThread {
                 appRecyclerView.adapter = AppHomeAdapter(installedApp, this)
                 allAppCount = installedApp.size
-                Log.e("App", "Apps list is changed")
             }
         }
 
@@ -184,9 +178,9 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     @SuppressLint("CommitPrefEdits")
     private fun addToSharedPreference(json: String){
-        val editor = sharedPref.edit()
-        editor.putString("json", json)
-        editor.apply()
+        sharedPref.edit().apply {
+            this.putString(JSON, json)
+        }.apply()
     }
 
     private fun getFirebaseRemoteConfigProperties(){
@@ -216,7 +210,6 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
 
     private fun dialogBuild(){
         dialog = Dialog(this)
-        dialog.setTitle(getString(R.string.dialog_new_update))
         dialog.setContentView(R.layout.dialog_update)
         dialog.setCanceledOnTouchOutside(false)
 
@@ -242,7 +235,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
             val pInfo = pm.getPackageInfo(BuildConfig.finpointPackageName, 0)
             finpointVersionCode = pInfo.versionCode
         }catch (e:Exception){
-            Log.e("ERROR", "Finpoint not installed")
+            e.printStackTrace()
         }
 
 
@@ -268,7 +261,6 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         mHandlerTask = object : Runnable {
             override fun run() {
                 getFirebaseRemoteConfigProperties()
-                Log.e("Update", "Updated")
                 mHandler.postDelayed(this, 1000 * 60 * 2)
             }
         }
