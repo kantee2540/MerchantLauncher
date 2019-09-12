@@ -39,7 +39,6 @@ class MessageFragment : Fragment(), RemoteConfigInterface{
     override fun onSuccessFetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
         val mess = remoteConfig.getString(BuildConfig.message).toByteArray(StandardCharsets.ISO_8859_1)
         val newValue = String(mess, StandardCharsets.UTF_8)
-        Log.e("MESSAGE",newValue)
         rootView.message_tv.text = newValue
     }
 
@@ -53,7 +52,6 @@ class MessageFragment : Fragment(), RemoteConfigInterface{
         val mHandlerTask = object : Runnable {
             override fun run() {
                 getMessage()
-                Log.e("Update", "Updated")
                 mHandler.postDelayed(this, 1000 * 60 * 2)
             }
         }

@@ -15,7 +15,7 @@ class AppHomeAdapter(val items: ArrayList<AppInfo>, val context: Context) : Recy
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.appTitleTv?.text = items[position].label
+        holder.appTitleTv.text = items[position].label
         holder.appIcon.setImageDrawable(items[position].icon)
 
         holder.appLayout.setOnClickListener {
@@ -31,8 +31,8 @@ class AppHomeAdapter(val items: ArrayList<AppInfo>, val context: Context) : Recy
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val appTitleTv = itemView.appNameTv
-        val appIcon = itemView.iconView
-        val appLayout = itemView.appLayout
+        val appTitleTv = itemView.appNameTv!!
+        val appIcon = itemView.iconView!!
+        val appLayout = itemView.appLayout!!
     }
 }

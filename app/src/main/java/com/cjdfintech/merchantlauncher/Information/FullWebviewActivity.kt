@@ -10,13 +10,17 @@ import kotlinx.android.synthetic.main.activity_full_webview.*
 class FullWebviewActivity : AppCompatActivity()  {
 
     private lateinit var webUrl: String
+    companion object{
+        private const val WEB_URL = "webUrl"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_webview)
 
-        if (intent.hasExtra("webUrl")){
-            webUrl = intent.getStringExtra("webUrl")
+        if (intent.hasExtra(WEB_URL)){
+            webUrl = intent.getStringExtra(WEB_URL)
         }else{
 
         }
