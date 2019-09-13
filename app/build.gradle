@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+def app_id = "com.cjdfintech.merchantlauncher"
+
 android {
     signingConfigs {
         release {
@@ -15,7 +17,7 @@ android {
     }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.cjdfintech.merchantlauncher"
+        applicationId "${app_id}"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -36,6 +38,8 @@ android {
     productFlavors {
         uat {
             dimension = 'default'
+            applicationId "${app_id}.uat"
+            resValue "string", "appName", "P1 Launcher UAT"
             buildConfigField "Boolean", "isProd", "false"
             buildConfigField "String", "packageShowApp", "\"package_show_app_uat\""
             buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp.uat\""
@@ -47,6 +51,8 @@ android {
         }
         prod {
             dimension = 'default'
+            applicationId "${app_id}"
+            resValue "string", "appName", "P1 Launcher"
             buildConfigField "Boolean", "isProd", "true"
             buildConfigField "String", "packageShowApp", "\"package_show_app\""
             buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp\""
