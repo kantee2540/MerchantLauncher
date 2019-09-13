@@ -39,18 +39,18 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         private const val JSON = "json"
     }
 
-    lateinit var pm: PackageManager
-    lateinit var installedApp: ArrayList<AppInfo>
-    lateinit var allApp: List<ResolveInfo>
-    lateinit var appRecyclerView: RecyclerView
-    lateinit var remoteConfig: FirebaseRemoteConfig
-    lateinit var dialog: Dialog
+    private lateinit var pm: PackageManager
+    private lateinit var installedApp: ArrayList<AppInfo>
+    private lateinit var allApp: List<ResolveInfo>
+    private lateinit var appRecyclerView: RecyclerView
+    private lateinit var remoteConfig: FirebaseRemoteConfig
+    private lateinit var dialog: Dialog
 
     private var firstOpen = true
     private var allAppCount = 0
 
-    lateinit var sharedPref: SharedPreferences
-    lateinit var mHandlerTask: Runnable
+    private lateinit var sharedPref: SharedPreferences
+    private lateinit var mHandlerTask: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,9 +112,9 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
         val checkPackage: ArrayList<RemoteConfigPackage> = ArrayList()
         val jsonArray = JSONArray(sharedPref.getString(JSON, ""))
 
-        for(i in 0 until jsonArray.length()){
+        for(x in 0 until jsonArray.length()){
             val remotePackage = RemoteConfigPackage()
-            val obj = jsonArray.getJSONObject(i)
+            val obj = jsonArray.getJSONObject(x)
             remotePackage.appName = obj.getString(REMOTE_APP_NAME)
             remotePackage.packageName = obj.getString(REMOTE_PACKAGE)
             remotePackage.show = obj.getBoolean(REMOTE_SHOW_APP)
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity(), RemoteConfigInterface {
                     else {
                         app.label = ri.loadLabel(pm)
                         app.icon = res.getDrawableForDensity(
-                            ri.activityInfo.applicationInfo.icon, DisplayMetrics.DENSITY_XXXHIGH)
+                            ri.activityInfo.applicationInfo.icon, DisplayMetrics.DENSITY_XXXHIGH)!!
 
                     }
                     app.packageName = ri.activityInfo.packageName
