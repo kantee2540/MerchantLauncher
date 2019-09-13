@@ -15,14 +15,22 @@ android {
             keyPassword 'welcome@2019'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "${app_id}"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "packageShowApp", "\"package_show_app\""
+        buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp\""
+        buildConfigField "String", "check_version_finpoint", "\"lastest_finpoint_version_code\""
+        buildConfigField "String", "openAppStore", "\"open_app_store\""
+        buildConfigField "String", "web1", "\"web1\""
+        buildConfigField "String", "message", "\"message\""
+        buildConfigField "String", "nextUpdate", "\"next_update\""
     }
     buildTypes {
         debug {
@@ -41,26 +49,13 @@ android {
             applicationId "${app_id}.uat"
             resValue "string", "appName", "P1 Launcher UAT"
             buildConfigField "Boolean", "isProd", "false"
-            buildConfigField "String", "packageShowApp", "\"package_show_app_uat\""
-            buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp.uat\""
-            buildConfigField "String", "check_version_finpoint", "\"lastest_finpoint_version_code_uat\""
-            buildConfigField "String", "openAppStore", "\"open_app_store_uat\""
-            buildConfigField "String", "web1", "\"web1_uat\""
-            buildConfigField "String", "message", "\"message_uat\""
-            buildConfigField "String", "nextUpdate", "\"next_update_uat\""
         }
         prod {
             dimension = 'default'
             applicationId "${app_id}"
             resValue "string", "appName", "P1 Launcher"
             buildConfigField "Boolean", "isProd", "true"
-            buildConfigField "String", "packageShowApp", "\"package_show_app\""
-            buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp\""
-            buildConfigField "String", "check_version_finpoint", "\"lastest_finpoint_version_code\""
-            buildConfigField "String", "openAppStore", "\"open_app_store\""
-            buildConfigField "String", "web1", "\"web1\""
-            buildConfigField "String", "message", "\"message\""
-            buildConfigField "String", "nextUpdate", "\"next_update\""
+
         }
     }
 }
