@@ -1,4 +1,4 @@
-package com.cjdfintech.merchantlauncher.Information
+package com.cjdfintech.merchantlauncher.information
 
 import android.os.Bundle
 import android.os.Handler

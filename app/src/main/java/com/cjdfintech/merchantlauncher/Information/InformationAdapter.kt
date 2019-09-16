@@ -1,4 +1,4 @@
-package com.cjdfintech.merchantlauncher.Information
+package com.cjdfintech.merchantlauncher.information
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

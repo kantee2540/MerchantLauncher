@@ -1,4 +1,4 @@
-package com.cjdfintech.merchantlauncher.Information
+package com.cjdfintech.merchantlauncher.information
 
 import android.annotation.SuppressLint
 import android.content.Intent

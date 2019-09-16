@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import androidx.recyclerview.widget.RecyclerView
-import com.cjdfintech.merchantlauncher.Information.*
+import com.cjdfintech.merchantlauncher.information.*
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_update.*
