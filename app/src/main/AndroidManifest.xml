@@ -13,7 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppThemeLauncher"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Information.FullWebviewActivity"></activity>
+        <activity android:name=".information.FullWebviewActivity" />
         <activity
                 android:name=".AppDrawerActivity"
                 android:screenOrientation="portrait" />
