@@ -49,13 +49,14 @@ android {
             applicationId "${app_id}.uat"
             resValue "string", "appName", "P1 Launcher UAT"
             buildConfigField "Boolean", "isProd", "false"
+            buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp.uat\""
         }
         prod {
             dimension = 'default'
             applicationId "${app_id}"
             resValue "string", "appName", "P1 Launcher"
             buildConfigField "Boolean", "isProd", "true"
-
+            buildConfigField "String", "finpointPackageName", "\"com.cjdfintech.merchantapp\""
         }
     }
 }
